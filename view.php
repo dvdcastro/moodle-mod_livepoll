@@ -34,9 +34,9 @@ $l  = optional_param('l', 0, PARAM_INT);
 if ($id) {
     $cm             = get_coursemodule_from_id('livepoll', $id, 0, false, MUST_EXIST);
     $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('mod_livepoll', array('id' => $cm->instance), '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('livepoll', array('id' => $cm->instance), '*', MUST_EXIST);
 } else if ($l) {
-    $moduleinstance = $DB->get_record('mod_livepoll', array('id' => $n), '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('livepoll', array('id' => $n), '*', MUST_EXIST);
     $course         = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
     $cm             = get_coursemodule_from_instance('livepoll', $moduleinstance->id, $course->id, false, MUST_EXIST);
 } else {
@@ -52,7 +52,7 @@ $event = \mod_livepoll\event\course_module_viewed::create(array(
     'context' => $modulecontext
 ));
 $event->add_record_snapshot('course', $course);
-$event->add_record_snapshot('mod_livepoll', $moduleinstance);
+$event->add_record_snapshot('livepoll', $moduleinstance);
 $event->trigger();
 
 $PAGE->set_url('/mod/livepoll/view.php', array('id' => $cm->id));
@@ -61,5 +61,45 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
+
+$userkey = sha1($course->id.'_'.$moduleinstance->id.'_'.$USER->id.'_'.$USER->firstname.'_'.$USER->lastname);
+$pollkey = sha1($course->id.'_'.$moduleinstance->id.'_'.$moduleinstance->name);
+
+$optkeys = ['a', 'b', 'c', 'd'];
+$pollopts = [];
+$templateopts = [];
+foreach ($optkeys as $optkey) {
+    $optionid = 'option' . $optkey;
+    $optiontxt = get_string('optionx', 'mod_livepoll', strtoupper($optkey));
+    if (empty($moduleinstance->{$optionid})) {
+        continue;
+    }
+
+    $pollopts[$optionid] = $moduleinstance->{$optionid};
+    $templateopts[] = (object) [
+        'title' => $optiontxt,
+        'optionid' => $optionid,
+        'value' => $moduleinstance->{$optionid},
+    ];
+}
+
+$canvote = has_capability('mod/livepoll:vote', $modulecontext);
+
+echo $OUTPUT->render_from_template('mod_livepoll/livepoll',
+    (object) [
+        'name' => $moduleinstance->name,
+        'intro' => $moduleinstance->intro,
+        'canvote' => $canvote,
+        'options' => $templateopts
+    ]);
+
+$PAGE->requires->js_call_amd('mod_livepoll/livepoll-lazy', 'init', [
+    'apiKey' => get_config('livepoll', 'firebaseapikey'),
+    'projectID' => get_config('livepoll', 'firebaseprojectid'),
+    'pollKey' => $pollkey,
+    'userKey' => $userkey,
+    'options' => $pollopts,
+    'correctOption' => $moduleinstance->correctoption,
+]);
 
 echo $OUTPUT->footer();

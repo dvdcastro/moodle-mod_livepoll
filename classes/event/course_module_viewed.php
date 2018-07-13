@@ -34,8 +34,16 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course_module_viewed extends \core\event\course_module_viewed {
+    /**
+     * Init method.
+     */
+    protected function init() {
+        $this->data['crud'] = 'r';
+        $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
+        $this->data['objecttable'] = 'page';
+    }
 
-    // For more information about the Events API, please visit:
-    // https://docs.moodle.org/dev/Event_2
-
+    public static function get_objectid_mapping() {
+        return array('db' => 'livepoll', 'restore' => 'livepoll');
+    }
 }

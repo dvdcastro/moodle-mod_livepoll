@@ -1,8 +1,9 @@
 # Live poll #
 
-TODO Describe the plugin shortly here.
+This module allows having a live updating poll.
 
-TODO Provide more detailed description here.
+It uses Firebase to push the updates and stores the data anonymously, so no GDPR
+concerns there.
 
 ## License ##
 

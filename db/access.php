@@ -28,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 $capabilities = [
 
     'mod/livepoll:addinstance' => [
+        'riskbitmask' => RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => [

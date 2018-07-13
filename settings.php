@@ -26,6 +26,17 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
-   // TODO: Define the plugin settings page.
-   // https://docs.moodle.org/dev/Admin_settings
+    $name = 'livepoll/firebaseapikey';
+    $title = get_string('firebaseapikey', 'mod_livepoll');
+    $description = get_string('firebaseapikey_desc', 'mod_livepoll');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $settings->add($setting);
+
+    $name = 'livepoll/firebaseprojectid';
+    $title = get_string('firebaseprojectid', 'mod_livepoll');
+    $description = get_string('firebaseprojectid_desc', 'mod_livepoll');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $settings->add($setting);
 }

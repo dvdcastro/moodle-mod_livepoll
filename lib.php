@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param string $feature Constant representing the feature.
  * @return true | null True if the feature is supported, null otherwise.
  */
-function mod_livepoll_supports($feature) {
+function livepoll_supports($feature) {
     switch ($feature) {
         case FEATURE_MOD_INTRO:
             return true;
@@ -52,12 +52,11 @@ function mod_livepoll_supports($feature) {
  * @param mod_livepoll_mod_form $mform The form.
  * @return int The id of the newly inserted record.
  */
-function mod_livepoll_add_instance($moduleinstance, $mform = null) {
+function livepoll_add_instance($livepoll, $mform = null) {
     global $DB;
 
-    $moduleinstance->timecreated = time();
-
-    $id = $DB->insert_record('mod_livepoll', $moduleinstance);
+    $livepoll->timecreated = time();
+    $id = $DB->insert_record('livepoll', $livepoll);
 
     return $id;
 }
@@ -72,13 +71,13 @@ function mod_livepoll_add_instance($moduleinstance, $mform = null) {
  * @param mod_livepoll_mod_form $mform The form.
  * @return bool True if successful, false otherwise.
  */
-function mod_livepoll_update_instance($moduleinstance, $mform = null) {
+function livepoll_update_instance($livepoll, $mform = null) {
     global $DB;
 
-    $moduleinstance->timemodified = time();
-    $moduleinstance->id = $moduleinstance->instance;
+    $livepoll->timemodified = time();
+    $livepoll->id = $livepoll->instance;
 
-    return $DB->update_record('mod_livepoll', $moduleinstance);
+    return $DB->update_record('livepoll', $livepoll);
 }
 
 /**
@@ -87,15 +86,15 @@ function mod_livepoll_update_instance($moduleinstance, $mform = null) {
  * @param int $id Id of the module instance.
  * @return bool True if successful, false on failure.
  */
-function mod_livepoll_delete_instance($id) {
+function livepoll_delete_instance($id) {
     global $DB;
 
-    $exists = $DB->get_record('mod_livepoll', array('id' => $id));
+    $exists = $DB->get_record('livepoll', array('id' => $id));
     if (!$exists) {
         return false;
     }
 
-    $DB->delete_records('mod_livepoll', array('id' => $id));
+    $DB->delete_records('livepoll', array('id' => $id));
 
     return true;
 }

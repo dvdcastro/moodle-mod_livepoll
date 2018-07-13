@@ -67,14 +67,49 @@ class mod_livepoll_mod_form extends moodleform_mod {
         }
 
         // Adding the rest of mod_livepoll settings, spreading all them into this fieldset
-        // ... or adding more fieldsets ('header' elements) if needed for better logic.
-        $mform->addElement('static', 'label1', 'livepollsettings', get_string('livepollsettings', 'mod_livepoll'));
         $mform->addElement('header', 'livepollfieldset', get_string('livepollfieldset', 'mod_livepoll'));
+        $mform->addHelpButton('livepollfieldset', 'livepollfieldset', 'mod_livepoll');
+        // Adding option fields.
+        $options = ['a', 'b', 'c', 'd'];
+        $required = ['a', 'b'];
+        $selectoptions = [];
+        foreach ($options as $option) {
+            $optionid = 'option' . $option;
+            $optiontxt = get_string('optionx', 'mod_livepoll', strtoupper($option));
+            $mform->addElement('text', $optionid, $optiontxt, array('size' => '64'));
+            $mform->setType($optionid, PARAM_TEXT);
+            if (in_array($option, $required)) {
+                $mform->addRule($optionid, null, 'required', null, 'client');
+            }
+            $mform->addRule($optionid, get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
+            // Populate options for correct option select.
+            $selectoptions[$optionid] = $optiontxt;
+        }
+
+        $mform->addElement('select', 'correctoption', get_string('correctoption', 'mod_livepoll'), $selectoptions);
+        $mform->addRule('correctoption', null, 'required', null, 'client');
 
         // Add standard elements.
         $this->standard_coursemodule_elements();
 
         // Add standard buttons.
         $this->add_action_buttons();
+    }
+
+    /**
+     * Enforce validation rules here
+     *
+     * @param array $data array of ("fieldname"=>value) of submitted data
+     * @param array $files array of uploaded files "element_name"=>tmp_file_path
+     * @return array
+     **/
+    public function validation($data, $files) {
+        $errors = parent::validation($data, $files);
+
+        // Check that correct option has been set.
+        if (empty($data[$data['correctoption']])) {
+            $errors['correctoption'] = get_string('correctoptioninvalid', 'mod_livepoll');
+        }
+        return $errors;
     }
 }
