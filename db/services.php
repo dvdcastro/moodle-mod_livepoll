@@ -13,19 +13,22 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Plugin version and other meta-data are defined here.
+ * Live poll external functions and service definitions.
  *
- * @package     mod_livepoll
- * @copyright   Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    mod_livepoll
+ * @category   external
+ * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->component = 'mod_livepoll';
-$plugin->release = '0.1.0';
-$plugin->version = 2018071302;
-$plugin->requires = 2017111300;
-$plugin->maturity = MATURITY_BETA;
+defined('MOODLE_INTERNAL') || die;
+$functions = [
+    'mod_livepoll_view_livepoll' => [
+        'classname' => 'mod_livepoll_external',
+        'methodname' => 'view_livepoll',
+        'description' => 'Trigger the course module viewed event.',
+        'type' => 'write',
+        'capabilities' => '',
+        'services' => [MOODLE_OFFICIAL_MOBILE_SERVICE],
+    ],
+];

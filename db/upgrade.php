@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param int $oldversion
  * @return bool
  */
-function xmldb_mod_livepoll_upgrade($oldversion) {
+function xmldb_livepoll_upgrade($oldversion) {
     global $DB;
 
     $dbman = $DB->get_manager();

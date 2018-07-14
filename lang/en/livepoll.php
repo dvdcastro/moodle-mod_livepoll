@@ -51,3 +51,5 @@ $string['correctoption'] = 'Correct option';
 $string['livepollfieldset_help'] = 'Please enter the values for the options, A and B are required. Also, the correct option needs to be set.';
 $string['correctoptioninvalid'] = 'The selected correct option must have a value.';
 $string['yourvote'] = 'Your vote';
+$string['vote'] = 'Vote';
+$string['loading'] = 'Loading';
