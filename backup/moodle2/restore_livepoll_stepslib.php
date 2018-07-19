@@ -41,15 +41,34 @@ class restore_livepoll_activity_structure_step extends restore_activity_structur
      */
     protected function define_structure() {
         $paths = array();
-        $userinfo = $this->get_setting_value('userinfo');
+        $paths[] = new restore_path_element('livepoll', '/activity/livepoll');
 
         return $this->prepare_activity_structure($paths);
+    }
+
+    protected function process_livepoll($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->course = $this->get_courseid();
+
+        // Any changes to the list of dates that needs to be rolled should be same during course restore and course reset.
+        // See MDL-9367.
+        $data->timeopen = $this->apply_date_offset($data->timeopen);
+        $data->timeclose = $this->apply_date_offset($data->timeclose);
+
+        // Insert the livepoll record.
+        $newitemid = $DB->insert_record('livepoll', $data);
+        // Immediately after inserting "activity" record, call this.
+        $this->apply_activity_instance($newitemid);
     }
 
     /**
      * Defines post-execution actions.
      */
     protected function after_execute() {
-        return;
+        // Add choice related files, no need to match by itemname (just internally handled context)
+        $this->add_related_files('mod_livepoll', 'intro', null);
     }
 }

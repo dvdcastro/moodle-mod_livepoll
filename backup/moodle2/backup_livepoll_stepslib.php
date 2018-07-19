@@ -40,21 +40,27 @@ class backup_livepoll_activity_structure_step extends backup_activity_structure_
      * @return backup_nested_element The structure wrapped by the common 'activity' element.
      */
     protected function define_structure() {
-        $userinfo = $this->get_setting_value('userinfo');
+        // The Live Poll module stores no user info.
 
-        // Replace with the attributes and final elements that the element will handle.
-        $attributes = null;
-        $final_elements = null;
-        $root = new backup_nested_element('mod_livepoll', $attributes, $final_elements);
+        // Define each element separated.
+        $livepoll = new backup_nested_element('livepoll', ['id'], [
+            'name', 'intro', 'introformat', 'timemodified',
+            'optiona', 'optionb', 'optionc', 'optiond', 'correctoption']);
 
-        // Build the tree with these elements with $root as the root of the backup tree.
 
-        // Define the source tables for the elements.
+        // Build the tree.
+        // Nothing here for Live Polls.
+
+        // Define sources.
+        $livepoll->set_source_table('livepoll', ['id' => backup::VAR_ACTIVITYID]);
 
         // Define id annotations.
+        // Module has no id annotations.
 
         // Define file annotations.
+        $livepoll->annotate_files('mod_livepoll', 'intro', null); // This file area hasn't itemid.
 
-        return $this->prepare_activity_structure($root);
+        // Return the root element (livepoll), wrapped into standard activity structure.
+        return $this->prepare_activity_structure($livepoll);
     }
 }

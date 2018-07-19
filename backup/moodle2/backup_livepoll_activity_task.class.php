@@ -29,8 +29,8 @@ defined('MOODLE_INTERNAL') || die();
 // https://docs.moodle.org/dev/Backup_2.0_for_developers
 // https://docs.moodle.org/dev/Restore_2.0_for_developers
 
-require_once($CFG->dirroot.'//mod/livepoll/backup/moodle2/backup_livepoll_stepslib.php');
-require_once($CFG->dirroot.'//mod/livepoll/backup/moodle2/backup_livepoll_settingslib.php');
+require_once($CFG->dirroot.'/mod/livepoll/backup/moodle2/backup_livepoll_stepslib.php');
+require_once($CFG->dirroot.'/mod/livepoll/backup/moodle2/backup_livepoll_settingslib.php');
 
 /**
  * The class provides all the settings and steps to perform one complete backup of mod_livepoll.
@@ -63,11 +63,11 @@ class backup_livepoll_activity_task extends backup_activity_task {
         $base = preg_quote($CFG->wwwroot,"/");
 
         // Link to the list of choices
-        $search="/(".$base."\//mod\/livepoll\/index.php\?id\=)([0-9]+)/";
+        $search="/(".$base."\/mod\/livepoll\/index.php\?id\=)([0-9]+)/";
         $content= preg_replace($search, '$@LIVEPOLLINDEX*$2@$', $content);
 
         // Link to choice view by moduleid
-        $search="/(".$base."\//mod\/livepoll\/view.php\?id\=)([0-9]+)/";
+        $search="/(".$base."\/mod\/livepoll\/view.php\?id\=)([0-9]+)/";
         $content= preg_replace($search, '$@LIVEPOLLVIEWBYID*$2@$', $content);
 
         return $content;
