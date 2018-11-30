@@ -52,7 +52,7 @@ define(['jquery', 'core/log'],
         };
 
         var initFirebase = function() {
-            // Set the configuration for your app
+            // Set the configuration for your app.
             var config = {
                 apiKey: self.apiKey,
                 authDomain: self.projectID + ".firebaseapp.com",
@@ -62,15 +62,13 @@ define(['jquery', 'core/log'],
 
             self.firebase.initializeApp(config);
 
-            // Get a reference to the database service
+            // Get a reference to the database service.
             self.database = self.firebase.database();
             self.auth = self.firebase.auth();
             self.auth.onAuthStateChanged(function(user) {
                 if (user) {
-                    // console.log('Anonymous user signed-in.', user);
                     self.fbuser = user;
                 } else {
-                    // console.log('There was no anonymous session. Creating a new anonymous user.');
                     // Sign the user in anonymously since accessing Storage requires the user to be authorized.
                     self.auth.signInAnonymously();
                 }
@@ -84,6 +82,9 @@ define(['jquery', 'core/log'],
             pollRef.on('child_added', updateVoteCount);
             pollRef.on('child_changed', updateVoteCount);
             pollRef.on('child_removed', updateVoteCount);
+
+            resetVotes();
+            updateVoteUI();
 
             var voteRef = self.database.ref('polls/' + self.pollKey + '/votes/' + self.userKey);
             voteRef.once('value').then(function(snapshot) {
