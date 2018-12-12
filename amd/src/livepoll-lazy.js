@@ -85,14 +85,6 @@ define(['jquery', 'core/log'],
 
             resetVotes();
             updateVoteUI();
-
-            var voteRef = self.database.ref('polls/' + self.pollKey + '/votes/' + self.userKey);
-            voteRef.once('value').then(function(snapshot) {
-                if (snapshot.val()) {
-                    var optionid = snapshot.val().option;
-                    $('.livepoll-votebtn[data-option="' + optionid + '"]').addClass('btn-success').removeClass('btn-primary');
-                }
-            });
         };
 
         var addClickListeners = function() {
@@ -103,10 +95,6 @@ define(['jquery', 'core/log'],
                 };
                 var voteRef = self.database.ref('polls/' + self.pollKey + '/votes/' + self.userKey);
                 voteRef.set(vote);
-                // Reset all other buttons.
-                $('.livepoll-votebtn').addClass('btn-primary').removeClass('btn-success');
-                // Set this button'' color.
-                $(this).removeClass('btn-primary').addClass('btn-success');
             }).removeClass('disabled');
         };
 
@@ -115,6 +103,10 @@ define(['jquery', 'core/log'],
             resetVotes();
             $.each(votes, function( userKey, vote ) {
                 self.votes[vote.option]++;
+                if (userKey === self.userKey) {
+                    $('.livepoll-votebtn').addClass('btn-primary').removeClass('btn-success');
+                    $('.livepoll-votebtn[data-option="' + vote.option + '"]').addClass('btn-success').removeClass('btn-primary');
+                }
             });
             updateVoteUI();
         };
