@@ -49,25 +49,23 @@
     {{ name }}
 </h2>
 {{{ intro }}}
-<table>
-    <tbody>
-        <tr>
-            {{#options}}
-                <td>
-                    <div class="alert alert-info" role="alert">
-                        <p class="alert-heading">{{ title }}</p>
-                        <h4>{{ value }}</h4>
-                        <hr>
-                        <h2 id="vote-count-{{ optionid }}" class="mb-0">
-                            {{# pix }} i/loading, core, {{# str }} loading, admin {{/ str }} {{/ pix }}
-                        </h2>
-                    </div>
-                </td>
-            {{/options}}
-        </tr>
-    </tbody>
-</table>
-
+<div class="container">
+    <div class="row">
+        <canvas id="livepoll-chart" class="col-sm"></canvas>
+    </div>
+    <div class="row">
+        {{#options}}
+            <div class="col-sm alert alert-info" role="alert">
+                <p class="alert-heading">{{ title }}</p>
+                <h4>{{ value }}</h4>
+                <hr>
+                <h2 id="vote-count-{{ optionid }}" class="mb-0">
+                    {{# pix }} i/loading, core, {{# str }} loading, admin {{/ str }} {{/ pix }}
+                </h2>
+            </div>
+        {{/options}}
+    </div>
+</div>
 {{#canvote}}
 <h5>
     {{# str }} yourvote, mod_livepoll {{/ str }}

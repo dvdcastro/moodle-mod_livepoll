@@ -20,8 +20,8 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'core/log'],
-    function($, Log) {
+define(['jquery', 'core/log', 'core/chartjs-lazy'],
+    function($, Log, Chart) {
 
         var self = this;
 
@@ -32,6 +32,8 @@ define(['jquery', 'core/log'],
             self.correctOption = correctOption;
             self.pollKey = pollKey;
             self.userKey = userKey;
+
+            resetVotes();
 
             $(document).ready(function() {
                 /* global firebase */
@@ -72,6 +74,7 @@ define(['jquery', 'core/log'],
                     // Sign the user in anonymously since accessing Storage requires the user to be authorized.
                     self.auth.signInAnonymously();
                 }
+                initChart();
                 addDBListeners();
                 addClickListeners();
             });
@@ -83,7 +86,6 @@ define(['jquery', 'core/log'],
             pollRef.on('child_changed', updateVoteCount);
             pollRef.on('child_removed', updateVoteCount);
 
-            resetVotes();
             updateVoteUI();
         };
 
@@ -112,8 +114,42 @@ define(['jquery', 'core/log'],
         };
 
         var updateVoteUI = function() {
+            self.chart.data.datasets[0].data = [];
             $.each(self.options, function(optionid) {
-                $('#vote-count-' + optionid).text(self.votes[optionid]);
+                var voteCount = self.votes[optionid];
+                $('#vote-count-' + optionid).text(voteCount);
+                self.chart.data.datasets[0].data.push(voteCount);
+            });
+            self.chart.update();
+        };
+
+        var initChart = function() {
+            var ctx = document.getElementById("livepoll-chart").getContext("2d");
+
+            var labels = [], votes = [];
+            $.each(self.options, function(optionid, label) {
+                labels.push(label);
+                votes.push(0);
+            });
+
+            self.chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Votes",
+                        data: votes,
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
             });
         };
 
