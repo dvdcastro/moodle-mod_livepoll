@@ -17,9 +17,7 @@
 {{!
     @template mod_livepoll/livepoll
 
-    Moodle modal template for SafeAssign test credentials function.
-
-    The purpose of this template is to render a modal
+    The purpose of this template is to render the livepoll container.
 
     Classes required for JS:
     * none
@@ -51,7 +49,9 @@
 {{{ intro }}}
 <div class="container">
     <div class="row">
-        <canvas id="livepoll-chart" class="col-sm"></canvas>
+        <div class="col-lg-2"></div>
+        <canvas id="livepoll-chart" class="col-lg-8"></canvas>
+        <div class="col-lg-2"></div>
     </div>
     <div class="row">
         {{#options}}
@@ -76,12 +76,3 @@
         </button>
     {{/options}}
 {{/canvote}}
-
-
-
-<!-- Firebase App is always required and must be first -->
-<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
-
-<!-- Add additional services that you want to use -->
-<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-database.js"></script>

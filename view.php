@@ -92,6 +92,7 @@ echo $OUTPUT->render_from_template('mod_livepoll/livepoll',
         'canvote' => $canvote,
         'options' => $templateopts
     ]);
+echo $OUTPUT->render_from_template('mod_livepoll/firebase_52', (object) []);
 
 $PAGE->requires->js_call_amd('mod_livepoll/livepoll-lazy', 'init', [
     'apiKey' => get_config('livepoll', 'firebaseapikey'),
