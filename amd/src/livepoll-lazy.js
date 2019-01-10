@@ -148,14 +148,37 @@ define(['jquery', 'core/log'],
         var initVoteUI = function() {
             var dfd = $.Deferred(), subPromises = [];
             self.resultHandlers = [];
+            var textDecorators = ['green', 'bold'];
             $.each(self.resultsToRender, function(i, rType) {
                 var reqDfd = $.Deferred();
                 require(
                     [
                         'mod_livepoll/' + rType + '-result-lazy'
                     ], function(Handler) {
-                        self.resultHandlers.push(new Handler());
-                        reqDfd.resolve();
+                        if (rType === 'text') {
+                            var currentTxtResult = new Handler(), txtPromises = [];
+
+                            $.each(textDecorators, function(i, decoratorId) {
+                                var txtDfd = $.Deferred();
+                                txtPromises.push(txtDfd.promise());
+                                require(
+                                    [
+                                        'mod_livepoll/' + decoratorId + '-text-result-lazy'
+                                    ], function(TextDecorator) {
+                                        currentTxtResult = new TextDecorator(currentTxtResult);
+                                        txtDfd.resolve();
+                                    }
+                                );
+                            });
+
+                            $.when.apply($, txtPromises).done(function() {
+                                self.resultHandlers.push(currentTxtResult);
+                                reqDfd.resolve();
+                            });
+                        } else {
+                            self.resultHandlers.push(new Handler());
+                            reqDfd.resolve();
+                        }
                     }
                 );
                 subPromises.push(reqDfd.promise());

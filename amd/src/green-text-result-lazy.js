@@ -14,46 +14,45 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Live poll text result for poll rendering.
+ * Live poll shiny decorated text result for poll rendering.
  *
  * @package mod_livepoll
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'mod_livepoll/result'],
-    function($, Result) {
+define(['jquery', 'mod_livepoll/decorated-text-result'],
+    function($, DecoratedTextResult) {
         /**
          * Text result constructor.
-         * @returns {TextResult}
+         * @returns {BoldTextResult}
          * @constructor
          */
-        function TextResult() {
-            Result.call(this);
+        function BoldTextResult(decoratedResult) {
+            DecoratedTextResult.call(this, decoratedResult);
             return (this);
         }
 
         // Prototype extension.
-        TextResult.prototype = Object.create(Result.prototype);
-
-        /**
-         * Renders the text result.
-         * @param options
-         * @param votes
-         */
-        TextResult.prototype.renderResult = function(options, votes) {
-            $.each(options, function(optionid) {
-                $('#vote-count-' + optionid).text(votes[optionid]);
-            });
-        };
+        BoldTextResult.prototype = Object.create(DecoratedTextResult.prototype);
 
         /**
          * @inheritDoc
          */
-        TextResult.prototype.performUpdate = function(options, votes, callback) {
-            this.renderResult(options, votes);
-            callback();
+        BoldTextResult.prototype.renderResult = function(options, votes) {
+            var highest = '', highValue = 0;
+            $.each(options, function(optionid) {
+                if (votes[optionid] > highValue) {
+                    highest = optionid;
+                    highValue = votes[optionid];
+                }
+                $('#vote-count-' + optionid).css('font-weight','');
+            });
+            if (highest !== '') {
+                $('#vote-count-' + highest).css('font-weight','Bold');
+            }
+            Object.getPrototypeOf(BoldTextResult.prototype).renderResult.call(this, options, votes);
         };
 
-        return (TextResult);
+        return (BoldTextResult);
     }
 );

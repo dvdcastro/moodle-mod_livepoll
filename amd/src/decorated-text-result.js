@@ -20,40 +20,32 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'mod_livepoll/result'],
-    function($, Result) {
+define(['jquery', 'mod_livepoll/text-result-lazy'],
+    function($, TextResult) {
         /**
-         * Text result constructor.
-         * @returns {TextResult}
+         * Decorated Text result constructor.
+         * @param {TextResult} decoratedResult
+         * @returns {DecoratedTextResult}
          * @constructor
          */
-        function TextResult() {
-            Result.call(this);
+        function DecoratedTextResult(decoratedResult) {
+            TextResult.call(this);
+            this._decoratedResult = decoratedResult;
             return (this);
         }
 
         // Prototype extension.
-        TextResult.prototype = Object.create(Result.prototype);
+        DecoratedTextResult.prototype = Object.create(TextResult.prototype);
 
         /**
          * Renders the text result.
          * @param options
          * @param votes
          */
-        TextResult.prototype.renderResult = function(options, votes) {
-            $.each(options, function(optionid) {
-                $('#vote-count-' + optionid).text(votes[optionid]);
-            });
+        DecoratedTextResult.prototype.renderResult = function(options, votes) {
+            this._decoratedResult.renderResult(options, votes);
         };
 
-        /**
-         * @inheritDoc
-         */
-        TextResult.prototype.performUpdate = function(options, votes, callback) {
-            this.renderResult(options, votes);
-            callback();
-        };
-
-        return (TextResult);
+        return (DecoratedTextResult);
     }
 );
