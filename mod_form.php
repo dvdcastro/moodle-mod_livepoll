@@ -89,6 +89,13 @@ class mod_livepoll_mod_form extends moodleform_mod {
         $mform->addElement('select', 'correctoption', get_string('correctoption', 'mod_livepoll'), $selectoptions);
         $mform->addRule('correctoption', null, 'required', null, 'client');
 
+        $strategies = [
+            'barchart_text' => get_string('barchart_text_result', 'mod_livepoll'),
+            'text_only' => get_string('text_only_result', 'mod_livepoll'),
+        ];
+        $mform->addElement('select', 'resultrendering', get_string('resultrendering', 'mod_livepoll'), $strategies);
+        $mform->addRule('resultrendering', null, 'required', null, 'client');
+
         // Add standard elements.
         $this->standard_coursemodule_elements();
 

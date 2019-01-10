@@ -89,32 +89,27 @@ echo $OUTPUT->render_from_template('mod_livepoll/header',
     (object) [
         'name' => $moduleinstance->name,
         'intro' => $moduleinstance->intro,
-        'canvote' => $canvote,
-        'options' => $templateopts
     ]);
 
-echo $OUTPUT->render_from_template('mod_livepoll/barchart_result',
-    (object) [
-        'name' => $moduleinstance->name,
-        'intro' => $moduleinstance->intro,
-        'canvote' => $canvote,
-        'options' => $templateopts
-    ]);
+// Performing a rendering strategy.
+$strategyid = $moduleinstance->resultrendering;
+$strategyclass = '\\mod_livepoll\\result\\' . $strategyid . '_strategy';
 
-echo $OUTPUT->render_from_template('mod_livepoll/text_result',
-    (object) [
-        'name' => $moduleinstance->name,
-        'intro' => $moduleinstance->intro,
-        'canvote' => $canvote,
-        'options' => $templateopts
-    ]);
+/**
+ * @var \mod_livepoll\result\rendering_strategy $strategy
+ */
+$strategy = new $strategyclass();
+$elements = $strategy->get_results_to_render();
+foreach ($elements as $elem) {
+    echo $OUTPUT->render_from_template('mod_livepoll/' . $elem . '_result',
+        (object) [
+            'options' => $templateopts
+        ]);
+}
 
 if ($canvote) {
     echo $OUTPUT->render_from_template('mod_livepoll/voting_buttons',
         (object) [
-            'name' => $moduleinstance->name,
-            'intro' => $moduleinstance->intro,
-            'canvote' => $canvote,
             'options' => $templateopts
         ]);
 }
@@ -127,6 +122,7 @@ $PAGE->requires->js_call_amd('mod_livepoll/livepoll-lazy', 'init', [
     'userKey' => $userkey,
     'options' => $pollopts,
     'correctOption' => $moduleinstance->correctoption,
+    'resultsToRender' => $elements,
 ]);
 
 echo $OUTPUT->footer();

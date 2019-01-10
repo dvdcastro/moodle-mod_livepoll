@@ -35,13 +35,14 @@ define(['jquery', 'core/log'],
          * @param options
          * @param correctOption
          */
-        var init = function(apiKey, projectID, pollKey, userKey, options, correctOption) {
+        var init = function(apiKey, projectID, pollKey, userKey, options, correctOption, resultsToRender) {
             self.apiKey = apiKey;
             self.projectID = projectID;
             self.options = options;
             self.correctOption = correctOption;
             self.pollKey = pollKey;
             self.userKey = userKey;
+            self.resultsToRender = resultsToRender;
 
             resetVotes();
 
@@ -146,9 +147,8 @@ define(['jquery', 'core/log'],
          */
         var initVoteUI = function() {
             var dfd = $.Deferred(), subPromises = [];
-            var resultTypes = ['barchart', 'text'];
             self.resultHandlers = [];
-            $.each(resultTypes, function(i, rType) {
+            $.each(self.resultsToRender, function(i, rType) {
                 var reqDfd = $.Deferred();
                 require(
                     [

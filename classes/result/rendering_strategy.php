@@ -13,19 +13,22 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Plugin version and other meta-data are defined here.
+ * Live poll rendering strategy interface.
  *
- * @package     mod_livepoll
- * @copyright   Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    mod_livepoll
+ * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+namespace mod_livepoll\result;
 
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->component = 'mod_livepoll';
-$plugin->release = '0.1.0';
-$plugin->version = 2018071303;
-$plugin->requires = 2017111300;
-$plugin->maturity = MATURITY_BETA;
+defined('MOODLE_INTERNAL') || die;
+/**
+ * Live poll rendering strategy interface.
+ *
+ * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+interface rendering_strategy {
+    public function get_results_to_render();
+}
