@@ -20,11 +20,21 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'core/log', 'core/chartjs-lazy'],
-    function($, Log, Chart) {
+define(['jquery', 'core/log'],
+    function($, Log) {
 
         var self = this;
 
+        /**
+         * Module initialization function.
+         *
+         * @param apiKey
+         * @param projectID
+         * @param pollKey
+         * @param userKey
+         * @param options
+         * @param correctOption
+         */
         var init = function(apiKey, projectID, pollKey, userKey, options, correctOption) {
             self.apiKey = apiKey;
             self.projectID = projectID;
@@ -46,6 +56,9 @@ define(['jquery', 'core/log', 'core/chartjs-lazy'],
             });
         };
 
+        /**
+         * Resets the vote count for each option to 0.
+         */
         var resetVotes = function() {
             self.votes = [];
             $.each(self.options, function(optionid) {
@@ -53,6 +66,9 @@ define(['jquery', 'core/log', 'core/chartjs-lazy'],
             });
         };
 
+        /**
+         * Initializes firebase library.
+         */
         var initFirebase = function() {
             // Set the configuration for your app.
             var config = {
@@ -74,12 +90,16 @@ define(['jquery', 'core/log', 'core/chartjs-lazy'],
                     // Sign the user in anonymously since accessing Storage requires the user to be authorized.
                     self.auth.signInAnonymously();
                 }
-                initChart();
-                addDBListeners();
-                addClickListeners();
+                initVoteUI().done(function() {
+                    addDBListeners();
+                    addClickListeners();
+                });
             });
         };
 
+        /**
+         * Adds listeners for state changes in the poll.
+         */
         var addDBListeners = function() {
             var pollRef = self.database.ref('polls/' + self.pollKey);
             pollRef.on('child_added', updateVoteCount);
@@ -89,6 +109,9 @@ define(['jquery', 'core/log', 'core/chartjs-lazy'],
             updateVoteUI();
         };
 
+        /**
+         * Adds the click listener to each vote btn so the vote firebase db is updated.
+         */
         var addClickListeners = function() {
             $('.livepoll-votebtn').on('click', function(){
                 var option = $(this).data('option');
@@ -100,6 +123,10 @@ define(['jquery', 'core/log', 'core/chartjs-lazy'],
             }).removeClass('disabled');
         };
 
+        /**
+         * Updates the voute count and vote UI for a poll snapshot.
+         * @param snapshot
+         */
         var updateVoteCount = function(snapshot) {
             var votes = snapshot.val();
             resetVotes();
@@ -113,43 +140,46 @@ define(['jquery', 'core/log', 'core/chartjs-lazy'],
             updateVoteUI();
         };
 
-        var updateVoteUI = function() {
-            self.chart.data.datasets[0].data = [];
-            $.each(self.options, function(optionid) {
-                var voteCount = self.votes[optionid];
-                $('#vote-count-' + optionid).text(voteCount);
-                self.chart.data.datasets[0].data.push(voteCount);
+        /**
+         *
+         * @returns {*|jQuery}
+         */
+        var initVoteUI = function() {
+            var dfd = $.Deferred(), subPromises = [];
+            var resultTypes = ['barchart', 'text'];
+            self.resultHandlers = [];
+            $.each(resultTypes, function(i, rType) {
+                var reqDfd = $.Deferred();
+                require(
+                    [
+                        'mod_livepoll/' + rType + '-result-lazy'
+                    ], function(Handler) {
+                        self.resultHandlers.push(new Handler());
+                        reqDfd.resolve();
+                    }
+                );
+                subPromises.push(reqDfd.promise());
             });
-            self.chart.update();
+
+            $.when.apply($, subPromises).done(function() {
+                dfd.resolve();
+            });
+
+            return dfd.promise();
         };
 
-        var initChart = function() {
-            var ctx = document.getElementById("livepoll-chart").getContext("2d");
-
-            var labels = [], votes = [];
-            $.each(self.options, function(optionid, label) {
-                labels.push(label);
-                votes.push(0);
+        /**
+         * Updates the vote UI.
+         * Chart and text vote count.
+         */
+        var updateVoteUI = function() {
+            var promises = [];
+            $.each(self.resultHandlers, function(i, handler) {
+                var promise = handler.update(self.options, self.votes);
+                promises.push(promise);
             });
-
-            self.chart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "Votes",
-                        data: votes,
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
+            $.when.apply($, promises).done(function() {
+                Log.debug('livepoll UI has been updated.');
             });
         };
 

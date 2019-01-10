@@ -85,15 +85,41 @@ foreach ($optkeys as $optkey) {
 
 $canvote = has_capability('mod/livepoll:vote', $modulecontext);
 
-echo $OUTPUT->render_from_template('mod_livepoll/livepoll',
+echo $OUTPUT->render_from_template('mod_livepoll/header',
     (object) [
         'name' => $moduleinstance->name,
         'intro' => $moduleinstance->intro,
         'canvote' => $canvote,
         'options' => $templateopts
     ]);
-echo $OUTPUT->render_from_template('mod_livepoll/firebase_52', (object) []);
 
+echo $OUTPUT->render_from_template('mod_livepoll/barchart_result',
+    (object) [
+        'name' => $moduleinstance->name,
+        'intro' => $moduleinstance->intro,
+        'canvote' => $canvote,
+        'options' => $templateopts
+    ]);
+
+echo $OUTPUT->render_from_template('mod_livepoll/text_result',
+    (object) [
+        'name' => $moduleinstance->name,
+        'intro' => $moduleinstance->intro,
+        'canvote' => $canvote,
+        'options' => $templateopts
+    ]);
+
+if ($canvote) {
+    echo $OUTPUT->render_from_template('mod_livepoll/voting_buttons',
+        (object) [
+            'name' => $moduleinstance->name,
+            'intro' => $moduleinstance->intro,
+            'canvote' => $canvote,
+            'options' => $templateopts
+        ]);
+}
+
+echo $OUTPUT->render_from_template('mod_livepoll/firebase_52', (object) []);
 $PAGE->requires->js_call_amd('mod_livepoll/livepoll-lazy', 'init', [
     'apiKey' => get_config('livepoll', 'firebaseapikey'),
     'projectID' => get_config('livepoll', 'firebaseprojectid'),

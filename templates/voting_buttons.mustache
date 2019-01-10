@@ -40,39 +40,11 @@
         ],
     }
 }}
-<h1>
-    {{# str }} modulename, mod_livepoll {{/ str }}
-</h1>
-<h2>
-    {{ name }}
-</h2>
-{{{ intro }}}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-2"></div>
-        <canvas id="livepoll-chart" class="col-lg-8"></canvas>
-        <div class="col-lg-2"></div>
-    </div>
-    <div class="row">
-        {{#options}}
-            <div class="col-sm alert alert-info" role="alert">
-                <p class="alert-heading">{{ title }}</p>
-                <h4>{{ value }}</h4>
-                <hr>
-                <h2 id="vote-count-{{ optionid }}" class="mb-0">
-                    {{# pix }} i/loading, core, {{# str }} loading, admin {{/ str }} {{/ pix }}
-                </h2>
-            </div>
-        {{/options}}
-    </div>
-</div>
-{{#canvote}}
 <h5>
     {{# str }} yourvote, mod_livepoll {{/ str }}
 </h5>
-    {{#options}}
-        <button class="btn btn-primary livepoll-votebtn disabled" data-option="{{ optionid }}">
-            {{ title }}
-        </button>
-    {{/options}}
-{{/canvote}}
+{{#options}}
+    <button class="btn btn-primary livepoll-votebtn disabled" data-option="{{ optionid }}">
+        {{ title }}
+    </button>
+{{/options}}
