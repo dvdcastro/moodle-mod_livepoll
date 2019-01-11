@@ -20,8 +20,8 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'mod_livepoll/decorated-text-result'],
-    function($, DecoratedTextResult) {
+define(['jquery', 'mod_livepoll/util', 'mod_livepoll/decorated-text-result'],
+    function($, util, DecoratedTextResult) {
         /**
          * Text result constructor.
          * @returns {TextResult}
@@ -39,20 +39,18 @@ define(['jquery', 'mod_livepoll/decorated-text-result'],
          * @inheritDoc
          */
         GreenTextResult.prototype.renderResult = function(options, votes) {
-            var highest = '', highValue = 0;
+            var highest = util.getHighestVotedOptions(options, votes);
             $.each(options, function(optionid) {
-                if (votes[optionid] > highValue) {
-                    highest = optionid;
-                    highValue = votes[optionid];
-                }
                 $('#vote-count-' + optionid).parent()
                     .addClass('alert-info')
                     .removeClass('alert-success');
             });
-            if (highest !== '') {
-                $('#vote-count-' + highest).parent()
-                    .removeClass('alert-info')
-                    .addClass('alert-success');
+            if (highest.length > 0) {
+                $.each(highest, function(i, optionid) {
+                    $('#vote-count-' + optionid).parent()
+                        .removeClass('alert-info')
+                        .addClass('alert-success');
+                });
             }
             Object.getPrototypeOf(GreenTextResult.prototype).renderResult.call(this, options, votes);
         };
