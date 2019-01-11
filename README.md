@@ -1,11 +1,26 @@
-# Live poll #
+# Live poll
 
 This module allows having a live updating poll.
 
 It uses Firebase to push the updates and stores the data anonymously, so no GDPR
 concerns there.
 
-## License ##
+## Configuration
+
+1. Go to [Firebase](https://firebase.google.com/) and create an account
+2. Once in the [Firebase console](https://console.firebase.google.com), create a project
+3. [Enable anonymous authentication](https://firebase.google.com/docs/auth/web/anonymous-auth)
+4. From the project overview page in the [Firebase console](https://console.firebase.google.com),
+click __Add Firebase to your web app__. If your project already has an app, select __Add App__
+from the project overview page.
+5. You can copy and paste the __Project ID__ and __API Key__ to add
+them to the Moodle plugin settings page. _Site administration > Plugins > Activity modules > Live poll_
+
+## Usage
+
+Just use it like a normal activity, this will not store any of the responses into Moodle.
+
+## License
 
 Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
 
