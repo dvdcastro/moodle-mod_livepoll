@@ -1,3 +1,4 @@
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -12,7 +13,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
  * Live poll shiny decorated text result for poll rendering.
  *
@@ -24,35 +24,39 @@ define(['jquery', 'mod_livepoll/decorated-text-result'],
     function($, DecoratedTextResult) {
         /**
          * Text result constructor.
-         * @returns {BoldTextResult}
+         * @returns {TextResult}
          * @constructor
          */
-        function BoldTextResult(decoratedResult) {
+        function GreenTextResult(decoratedResult) {
             DecoratedTextResult.call(this, decoratedResult);
             return (this);
         }
 
         // Prototype extension.
-        BoldTextResult.prototype = Object.create(DecoratedTextResult.prototype);
+        GreenTextResult.prototype = Object.create(DecoratedTextResult.prototype);
 
         /**
          * @inheritDoc
          */
-        BoldTextResult.prototype.renderResult = function(options, votes) {
+        GreenTextResult.prototype.renderResult = function(options, votes) {
             var highest = '', highValue = 0;
             $.each(options, function(optionid) {
                 if (votes[optionid] > highValue) {
                     highest = optionid;
                     highValue = votes[optionid];
                 }
-                $('#vote-count-' + optionid).css('font-weight','');
+                $('#vote-count-' + optionid).parent()
+                    .addClass('alert-info')
+                    .removeClass('alert-success');
             });
             if (highest !== '') {
-                $('#vote-count-' + highest).css('font-weight','Bold');
+                $('#vote-count-' + highest).parent()
+                    .removeClass('alert-info')
+                    .addClass('alert-success');
             }
-            Object.getPrototypeOf(BoldTextResult.prototype).renderResult.call(this, options, votes);
+            Object.getPrototypeOf(GreenTextResult.prototype).renderResult.call(this, options, votes);
         };
 
-        return (BoldTextResult);
+        return (GreenTextResult);
     }
 );

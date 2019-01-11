@@ -24,35 +24,35 @@ define(['jquery', 'mod_livepoll/decorated-text-result'],
     function($, DecoratedTextResult) {
         /**
          * Text result constructor.
-         * @returns {TextResult}
+         * @returns {BoldTextResult}
          * @constructor
          */
-        function GreenTextResult(decoratedResult) {
+        function BoldTextResult(decoratedResult) {
             DecoratedTextResult.call(this, decoratedResult);
             return (this);
         }
 
         // Prototype extension.
-        GreenTextResult.prototype = Object.create(DecoratedTextResult.prototype);
+        BoldTextResult.prototype = Object.create(DecoratedTextResult.prototype);
 
         /**
          * @inheritDoc
          */
-        GreenTextResult.prototype.renderResult = function(options, votes) {
+        BoldTextResult.prototype.renderResult = function(options, votes) {
             var highest = '', highValue = 0;
             $.each(options, function(optionid) {
                 if (votes[optionid] > highValue) {
                     highest = optionid;
                     highValue = votes[optionid];
                 }
-                $('#vote-count-' + optionid).parent().removeClass('alert-success');
+                $('#vote-count-' + optionid).css('font-weight','');
             });
             if (highest !== '') {
-                $('#vote-count-' + highest).parent().addClass('alert-success');
+                $('#vote-count-' + highest).css('font-weight','Bold');
             }
-            Object.getPrototypeOf(GreenTextResult.prototype).renderResult.call(this, options, votes);
+            Object.getPrototypeOf(BoldTextResult.prototype).renderResult.call(this, options, votes);
         };
 
-        return (GreenTextResult);
+        return (BoldTextResult);
     }
 );
