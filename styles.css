@@ -1,0 +1,4 @@
+.mod-livepoll-shadowy {
+    box-shadow: 0.3rem 0.8rem 0.6rem #888888;
+    transition: box-shadow 0.3s ease-in-out;
+}

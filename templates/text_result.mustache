@@ -43,13 +43,15 @@
 <div class="container">
     <div class="row">
         {{#options}}
-            <div class="col-sm alert alert-info" role="alert">
-                <p class="alert-heading">{{ title }}</p>
-                <h4>{{ value }}</h4>
-                <hr>
-                <h2 id="vote-count-{{ optionid }}" class="mb-0">
-                    {{# pix }} i/loading, core, {{# str }} loading, admin {{/ str }} {{/ pix }}
-                </h2>
+            <div class="col-sm">
+                <div class="alert alert-info" role="alert">
+                    <p class="alert-heading">{{ title }}</p>
+                    <h4>{{ value }}</h4>
+                    <hr>
+                    <h2 id="vote-count-{{ optionid }}" class="mb-0">
+                        {{# pix }} i/loading, core, {{# str }} loading, admin {{/ str }} {{/ pix }}
+                    </h2>
+                </div>
             </div>
         {{/options}}
     </div>
