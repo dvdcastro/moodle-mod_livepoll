@@ -107,7 +107,7 @@ define(["jquery", "core/log"],
         var initVoteUI = function() {
             var dfd = $.Deferred(), subPromises = [];
             self.resultHandlers = [];
-            var textDecorators = ["green", "bold", "shadowy"];
+            var textDecorators = ["green", "bold", "closer", "shadowy", "draggable"];
             $.each(self.resultsToRender, function(i, rType) {
                 var reqDfd = $.Deferred();
                 require(

@@ -5,3 +5,54 @@
 .mod-livepoll-text-result {
     transition: box-shadow 0.3s ease-in-out;
 }
+
+/* Spinner experiment. */
+
+/* WebKit and Opera browsers. */
+@-webkit-keyframes mod-livepoll-spinner-anim {
+    from { -webkit-transform: rotateY(0deg);    }
+    to   { -webkit-transform: rotateY(-360deg); }
+}
+
+/* All other browsers. */
+@keyframes mod-livepoll-spinner-anim {
+    from {
+        -moz-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+    }
+    to {
+        -moz-transform: rotateY(-360deg);
+        -ms-transform: rotateY(-360deg);
+        transform: rotateY(-360deg);
+    }
+}
+
+.mod-livepoll-3d-stage {
+    -webkit-perspective: 1200px;
+    -moz-perspective: 1200px;
+    -ms-perspective: 1200px;
+    perspective: 1200px;
+}
+
+.mod-livepoll-3d-spinner {
+    -webkit-animation-name: mod-livepoll-spinner-anim;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 6s;
+
+    animation-name: mod-livepoll-spinner-anim;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 6s;
+
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.mod-livepoll-3d-spinner:hover {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+}
