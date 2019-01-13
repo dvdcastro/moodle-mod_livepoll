@@ -120,7 +120,14 @@ define(['jquery', 'core/log'],
                     option: option
                 };
                 var voteRef = self.database.ref('polls/' + self.pollKey + '/votes/' + self.userKey);
-                voteRef.set(vote);
+                voteRef.once('value').then(function(voteSnapshot) {
+                    if (voteSnapshot.val() && voteSnapshot.val().option === vote.option) {
+                        voteRef.remove();
+                    } else {
+                        voteRef.set(vote);
+                    }
+                });
+
             }).removeClass('disabled');
         };
 
@@ -131,10 +138,10 @@ define(['jquery', 'core/log'],
         var updateVoteCount = function(snapshot) {
             var votes = snapshot.val();
             resetVotes();
+            $('.livepoll-votebtn').addClass('btn-primary').removeClass('btn-success');
             $.each(votes, function( userKey, vote ) {
                 self.votes[vote.option]++;
                 if (userKey === self.userKey) {
-                    $('.livepoll-votebtn').addClass('btn-primary').removeClass('btn-success');
                     $('.livepoll-votebtn[data-option="' + vote.option + '"]').addClass('btn-success').removeClass('btn-primary');
                 }
             });
