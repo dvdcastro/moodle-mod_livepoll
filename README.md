@@ -15,6 +15,7 @@ click __Add Firebase to your web app__. If your project already has an app, sele
 from the project overview page.
 5. You can copy and paste the __Project ID__ and __API Key__ to add
 them to the Moodle plugin settings page. _Site administration > Plugins > Activity modules > Live poll_
+6. For the polls to work, you need to enable [anonymous authentication](https://firebase.google.com/docs/auth/web/anonymous-auth).
 
 ## Usage
 
