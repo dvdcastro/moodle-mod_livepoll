@@ -10,8 +10,12 @@
 
 /* WebKit and Opera browsers. */
 @-webkit-keyframes mod-livepoll-spinner-anim {
-    from { -webkit-transform: rotateY(0deg);    }
-    to   { -webkit-transform: rotateY(-360deg); }
+    from {
+        -webkit-transform: rotateY(0deg);
+    }
+    to {
+        -webkit-transform: rotateY(-360deg);
+    }
 }
 
 /* All other browsers. */
