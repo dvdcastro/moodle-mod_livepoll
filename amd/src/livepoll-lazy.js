@@ -84,17 +84,24 @@ define(['jquery', 'core/log'],
             // Get a reference to the database service.
             self.database = self.firebase.database();
             self.auth = self.firebase.auth();
+            self.auth.signInAnonymously().catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                Log.error('Could not authenticate into firebase using anonymous setup.');
+                Log.error(errorCode);
+                Log.error(errorMessage);
+            });
             self.auth.onAuthStateChanged(function(user) {
                 if (user) {
                     self.fbuser = user;
+                    initVoteUI().done(function() {
+                        addDBListeners();
+                        addClickListeners();
+                    });
                 } else {
-                    // Sign the user in anonymously since accessing Storage requires the user to be authorized.
-                    self.auth.signInAnonymously();
+                    Log.error('User has signed out from firebase.');
                 }
-                initVoteUI().done(function() {
-                    addDBListeners();
-                    addClickListeners();
-                });
             });
         };
 
