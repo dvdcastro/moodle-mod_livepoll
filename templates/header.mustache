@@ -17,7 +17,7 @@
 {{!
     @template mod_livepoll/livepoll
 
-    The purpose of this template is to render the livepoll container.
+    The purpose of this template is to render the livepoll header.
 
     Classes required for JS:
     * none
@@ -26,18 +26,13 @@
     * none
 
     Context variables required for this template:
-    * options list of available options
+    * name
+    * intro
 
     Example context (json):
     {
-        "options": [
-            {
-                "title" : "Option A",
-                "optionid" : "optiona",
-                "value" : "abc"
-            },
-            ...
-        ],
+        "name": "A name",
+        "intro": "An intro"
     }
 }}
 <h1>

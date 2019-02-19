@@ -95,9 +95,7 @@ echo $OUTPUT->render_from_template('mod_livepoll/header',
 $strategyid = $moduleinstance->resultrendering;
 $strategyclass = '\\mod_livepoll\\result\\' . $strategyid . '_strategy';
 
-/**
- * @var \mod_livepoll\result\rendering_strategy $strategy
- */
+/** @var \mod_livepoll\result\rendering_strategy $strategy */
 $strategy = new $strategyclass();
 $elements = $strategy->get_results_to_render();
 foreach ($elements as $elem) {

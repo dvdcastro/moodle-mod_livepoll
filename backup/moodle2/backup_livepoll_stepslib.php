@@ -25,10 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// For more information about the backup and restore process, please visit:
-// https://docs.moodle.org/dev/Backup_2.0_for_developers
-// https://docs.moodle.org/dev/Restore_2.0_for_developers
-
 /**
  * Define the complete structure for backup, with file and id annotations.
  */
@@ -46,7 +42,6 @@ class backup_livepoll_activity_structure_step extends backup_activity_structure_
         $livepoll = new backup_nested_element('livepoll', ['id'], [
             'name', 'intro', 'introformat', 'timemodified',
             'optiona', 'optionb', 'optionc', 'optiond', 'correctoption']);
-
 
         // Build the tree.
         // Nothing here for Live Polls.

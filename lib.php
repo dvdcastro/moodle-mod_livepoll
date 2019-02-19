@@ -52,7 +52,7 @@ function livepoll_supports($feature) {
  * @param mod_livepoll_mod_form $mform The form.
  * @return int The id of the newly inserted record.
  */
-function livepoll_add_instance($livepoll, $mform = null) {
+function livepoll_add_instance($livepoll) {
     global $DB;
 
     $livepoll->timecreated = time();
@@ -71,7 +71,7 @@ function livepoll_add_instance($livepoll, $mform = null) {
  * @param mod_livepoll_mod_form $mform The form.
  * @return bool True if successful, false otherwise.
  */
-function livepoll_update_instance($livepoll, $mform = null) {
+function livepoll_update_instance($livepoll) {
     global $DB;
 
     $livepoll->timemodified = time();

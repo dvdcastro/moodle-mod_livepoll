@@ -13,7 +13,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
  * Plugin event classes are defined here.
  *
@@ -21,9 +20,7 @@
  * @copyright   Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 namespace mod_livepoll\event;
-
 defined('MOODLE_INTERNAL') || die();
 
 /**

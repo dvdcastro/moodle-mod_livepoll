@@ -66,7 +66,7 @@ class mod_livepoll_mod_form extends moodleform_mod {
             $this->add_intro_editor();
         }
 
-        // Adding the rest of mod_livepoll settings, spreading all them into this fieldset
+        // Adding the rest of mod_livepoll settings, spreading all them into this fieldset.
         $mform->addElement('header', 'livepollfieldset', get_string('livepollfieldset', 'mod_livepoll'));
         $mform->addHelpButton('livepollfieldset', 'livepollfieldset', 'mod_livepoll');
         // Adding option fields.

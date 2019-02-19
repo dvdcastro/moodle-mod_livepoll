@@ -25,10 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// For more information about the backup and restore process, please visit:
-// https://docs.moodle.org/dev/Backup_2.0_for_developers
-// https://docs.moodle.org/dev/Restore_2.0_for_developers
-
 require_once($CFG->dirroot.'//mod/livepoll/backup/moodle2/restore_livepoll_stepslib.php');
 
 /**
@@ -76,7 +72,6 @@ class restore_livepoll_activity_task extends restore_activity_task {
         $rules[] = new restore_decode_rule('LIVEPOLLVIEWBYID', '/mod/livepoll/view.php?id=$1', 'course_module');
         $rules[] = new restore_decode_rule('LIVEPOLLINDEX', '/mod/livepoll/index.php?id=$1', 'course');
 
-
         return $rules;
     }
 
@@ -109,7 +104,7 @@ class restore_livepoll_activity_task extends restore_activity_task {
     static public function define_restore_log_rules_for_course() {
         $rules = array();
 
-        // Fix old wrong uses (missing extension)
+        // Fix old wrong uses (missing extension).
         $rules[] = new restore_log_rule('livepoll', 'view all', 'index?id={course}', null,
             null, null, 'index.php?id={course}');
         $rules[] = new restore_log_rule('livepoll', 'view all', 'index.php?id={course}', null);

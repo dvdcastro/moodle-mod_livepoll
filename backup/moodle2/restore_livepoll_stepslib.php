@@ -25,10 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// For more information about the backup and restore process, please visit:
-// https://docs.moodle.org/dev/Backup_2.0_for_developers
-// https://docs.moodle.org/dev/Restore_2.0_for_developers
-
 /**
  * Defines the structure step to restore one mod_livepoll activity.
  */
@@ -50,7 +46,6 @@ class restore_livepoll_activity_structure_step extends restore_activity_structur
         global $DB;
 
         $data = (object)$data;
-        $oldid = $data->id;
         $data->course = $this->get_courseid();
 
         // Any changes to the list of dates that needs to be rolled should be same during course restore and course reset.
@@ -68,7 +63,7 @@ class restore_livepoll_activity_structure_step extends restore_activity_structur
      * Defines post-execution actions.
      */
     protected function after_execute() {
-        // Add choice related files, no need to match by itemname (just internally handled context)
+        // Add choice related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_livepoll', 'intro', null);
     }
 }

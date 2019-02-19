@@ -20,7 +20,6 @@
  * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 namespace mod_livepoll\output;
 defined('MOODLE_INTERNAL') || die();
 
@@ -40,12 +39,10 @@ class mobile {
      *
      * @return array HTML, javascript and otherdata
      */
-    public static function mobile_course_view($args)
-    {
-        global $OUTPUT, $USER, $DB;
+    public static function mobile_course_view($args) {
+        global $OUTPUT, $DB;
         $args = (object)$args;
         $cm = get_coursemodule_from_id('livepoll', $args->cmid);
-        $course = $DB->get_record('course', ['id' => $cm->course]);
         // Capabilities check.
         require_login($args->courseid, false, $cm, true, true);
         $context = context_module::instance($cm->id);

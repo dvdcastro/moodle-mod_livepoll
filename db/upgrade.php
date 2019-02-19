@@ -40,7 +40,15 @@ function xmldb_livepoll_upgrade($oldversion) {
         // New field for storing the result rendering.
         $table = new xmldb_table('livepoll');
 
-        $field = new xmldb_field('resultrendering', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, 'barchart_text', 'correctoption');
+        $field = new xmldb_field(
+            'resultrendering',
+            XMLDB_TYPE_CHAR,
+            '255',
+            null,
+            XMLDB_NOTNULL,
+            null,
+            'barchart_text',
+            'correctoption');
 
         // Conditionally launch add field content.
         if (!$dbman->field_exists($table, $field)) {
