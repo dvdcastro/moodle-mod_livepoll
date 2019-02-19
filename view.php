@@ -62,8 +62,8 @@ $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
 
-$userkey = sha1($course->id.'_'.$moduleinstance->id.'_'.$USER->id.'_'.$USER->firstname.'_'.$USER->lastname);
-$pollkey = sha1($course->id.'_'.$moduleinstance->id.'_'.$moduleinstance->name);
+$userkey = sha1($course->id.'_'.$moduleinstance->id.'_'.$USER->id);
+$pollkey = sha1($course->id.'_'.$moduleinstance->id);
 
 $optkeys = ['a', 'b', 'c', 'd'];
 $pollopts = [];
