@@ -25,16 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// For installation and usage of PHPUnit within Moodle please read:
-// https://docs.moodle.org/dev/PHPUnit
-//
-// Documentation for writing PHPUnit tests for Moodle can be found here:
-// https://docs.moodle.org/dev/PHPUnit_integration
-// https://docs.moodle.org/dev/Writing_PHPUnit_tests
-//
-// The official PHPUnit homepage is at:
-// https://phpunit.de
-
 /**
  * The poll_handler test class.
  *
@@ -43,7 +33,27 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_livepoll_poll_handler_testcase extends advanced_testcase {
+    public function test_strategy() {
+        $this->resetAfterTest(true);
+        // Performing a rendering strategy.
+        $strategyies = [
+            'text_only' => [
+                'text'
+            ],
+            'barchart_text' => [
+                'barchart',
+                'text'
+            ],
+        ];
+        foreach ($strategyies as $strategyid => $elements) {
+            $strategyclass = '\\mod_livepoll\\result\\' . $strategyid . '_strategy';
 
-    // Write the tests here as public funcions.
+            /** @var \mod_livepoll\result\rendering_strategy $strategy */
+            $strategy = new $strategyclass();
+            $relements = $strategy->get_results_to_render();
 
+            $this->assertInstanceOf(\mod_livepoll\result\rendering_strategy::class, $strategy);
+            $this->assertEquals($elements, $relements);
+        }
+    }
 }

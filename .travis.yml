@@ -23,6 +23,7 @@ env:
   - MOODLE_BRANCH=MOODLE_34_STABLE
   - MOODLE_BRANCH=MOODLE_35_STABLE
   - MOODLE_BRANCH=MOODLE_36_STABLE
+  - IGNORE_NAMES=mobile_view_page.mustache
  matrix:
   - DB=pgsql
   - DB=mysqli
