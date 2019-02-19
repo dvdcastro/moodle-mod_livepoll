@@ -25,6 +25,9 @@
 
 namespace mod_livepoll\privacy;
 
+use core_privacy\local\metadata\collection;
+use core_privacy\local\metadata\provider as metadataprovider;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -33,14 +36,18 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements \core_privacy\local\metadata\null_provider {
+class provider implements metadataprovider {
 
     /**
      * Returns stringid of a text explaining that this plugin stores no personal data.
      *
-     * @return string
+     * @return collection
      */
-    public static function get_reason() : string {
-        return 'privacy:metadata';
+    public static function get_metadata(collection $collection) : collection {
+        $collection->add_external_location_link('livepoll_firebase', [
+            'userid' => 'privacy:metadata:livepoll_firebase:userid'
+        ], 'privacy:metadata:livepoll_firebase');
+
+        return $collection;
     }
 }
