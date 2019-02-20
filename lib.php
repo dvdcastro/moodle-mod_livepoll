@@ -47,10 +47,9 @@ function livepoll_supports($feature) {
  * Given an object containing all the necessary data, (defined by the form
  * in mod_form.php) this function will create a new instance and return the id
  * number of the instance.
- *
- * @param object $moduleinstance An object from the form.
- * @param mod_livepoll_mod_form $mform The form.
- * @return int The id of the newly inserted record.
+ * @param object $livepoll An object from the form.
+ * @return bool|int The id of the newly inserted record.
+ * @throws dml_exception
  */
 function livepoll_add_instance($livepoll) {
     global $DB;
@@ -67,9 +66,9 @@ function livepoll_add_instance($livepoll) {
  * Given an object containing all the necessary data (defined in mod_form.php),
  * this function will update an existing instance with new data.
  *
- * @param object $moduleinstance An object from the form in mod_form.php.
- * @param mod_livepoll_mod_form $mform The form.
+ * @param object $livepoll  An object from the form in mod_form.php.
  * @return bool True if successful, false otherwise.
+ * @throws dml_exception
  */
 function livepoll_update_instance($livepoll) {
     global $DB;

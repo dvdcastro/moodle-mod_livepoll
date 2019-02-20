@@ -39,8 +39,8 @@ defined('MOODLE_INTERNAL') || die();
 class provider implements metadataprovider {
 
     /**
-     * Returns stringid of a text explaining that this plugin stores no personal data.
-     *
+     * Gets the metadata collection for this plugin.
+     * @param collection $collection
      * @return collection
      */
     public static function get_metadata(collection $collection) : collection {

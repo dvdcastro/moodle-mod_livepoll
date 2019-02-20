@@ -47,7 +47,7 @@ define(['jquery', 'mod_livepoll/result'],
         };
 
         /**
-         * @inheritDoc
+         * {@inheritdoc}
          */
         TextResult.prototype.performUpdate = function(options, votes, callback) {
             this.renderResult(options, votes);

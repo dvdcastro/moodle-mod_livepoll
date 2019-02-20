@@ -36,7 +36,7 @@ define(['jquery', 'mod_livepoll/util', 'mod_livepoll/decorated-text-result'],
         GreenTextResult.prototype = Object.create(DecoratedTextResult.prototype);
 
         /**
-         * @inheritDoc
+         * {@inheritdoc}
          */
         GreenTextResult.prototype.renderResult = function(options, votes) {
             var highest = util.getHighestVotedOptions(options, votes);

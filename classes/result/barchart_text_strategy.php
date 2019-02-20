@@ -30,6 +30,10 @@ defined('MOODLE_INTERNAL') || die;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class barchart_text_strategy implements rendering_strategy {
+
+    /**
+     * {@inheritdoc}
+     */
     public function get_results_to_render() {
         return [
             'barchart',

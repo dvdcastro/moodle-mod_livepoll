@@ -18,7 +18,6 @@
  * The task that provides a complete restore of mod_livepoll is defined here.
  *
  * @package     mod_livepoll
- * @category    restore
  * @copyright   Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,29 +28,28 @@ require_once($CFG->dirroot.'//mod/livepoll/backup/moodle2/restore_livepoll_steps
 
 /**
  * Restore task for mod_livepoll.
+ * @package     mod_livepoll
+ * @copyright   Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_livepoll_activity_task extends restore_activity_task {
 
     /**
-     * Defines particular settings that this activity can have.
+     * {@inheritdoc}
      */
     protected function define_my_settings() {
         return;
     }
 
     /**
-     * Defines particular steps that this activity can have.
-     *
-     * @return base_step.
+     * {@inheritdoc}
      */
     protected function define_my_steps() {
         $this->add_step(new restore_livepoll_activity_structure_step('livepoll_structure', 'livepoll.xml'));
     }
 
     /**
-     * Defines the contents in the activity that must be processed by the link decoder.
-     *
-     * @return array.
+     * {@inheritdoc}
      */
     static public function define_decode_contents() {
         $contents = array();
@@ -62,9 +60,7 @@ class restore_livepoll_activity_task extends restore_activity_task {
     }
 
     /**
-     * Defines the decoding rules for links belonging to the activity to be executed by the link decoder.
-     *
-     * @return array.
+     * {@inheritdoc}
      */
     static public function define_decode_rules() {
         $rules = array();
@@ -76,10 +72,7 @@ class restore_livepoll_activity_task extends restore_activity_task {
     }
 
     /**
-     * Define the restore log rules that will be applied
-     * by the {@link restore_logs_processor} when restoring
-     * livepoll logs. It must return one array
-     * of {@link restore_log_rule} objects
+     * {@inheritdoc}
      */
     static public function define_restore_log_rules() {
         $rules = array();
@@ -92,14 +85,7 @@ class restore_livepoll_activity_task extends restore_activity_task {
     }
 
     /**
-     * Define the restore log rules that will be applied
-     * by the {@link restore_logs_processor} when restoring
-     * course logs. It must return one array
-     * of {@link restore_log_rule} objects
-     *
-     * Note this rules are applied when restoring course logs
-     * by the restore final task, but are defined here at
-     * activity level. All them are rules not linked to any module instance (cmid = 0)
+     * {@inheritdoc}
      */
     static public function define_restore_log_rules_for_course() {
         $rules = array();

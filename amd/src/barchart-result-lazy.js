@@ -75,7 +75,7 @@ define(['jquery', 'core/log', 'mod_livepoll/result', 'core/chartjs-lazy'],
         };
 
         /**
-         * @inheritDoc
+         * {@inheritdoc}
          */
         BarChartResult.prototype.performUpdate = function(options, votes, callback) {
             var self = this;

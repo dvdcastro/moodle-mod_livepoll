@@ -18,7 +18,6 @@
  * Plugin administration pages are defined here.
  *
  * @package     mod_livepoll
- * @category    admin
  * @copyright   Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

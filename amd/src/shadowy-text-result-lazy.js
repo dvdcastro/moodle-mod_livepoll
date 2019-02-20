@@ -36,7 +36,7 @@ define(['jquery', 'mod_livepoll/util', 'mod_livepoll/decorated-text-result'],
         ShadowyTextResult.prototype = Object.create(DecoratedTextResult.prototype);
 
         /**
-         * @inheritDoc
+         * {@inheritdoc}
          */
         ShadowyTextResult.prototype.renderResult = function(options, votes) {
             var highest = util.getHighestVotedOptions(options, votes);

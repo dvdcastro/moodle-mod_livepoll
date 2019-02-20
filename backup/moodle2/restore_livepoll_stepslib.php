@@ -18,7 +18,6 @@
  * All the steps to restore mod_livepoll are defined here.
  *
  * @package     mod_livepoll
- * @category    restore
  * @copyright   Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,13 +26,15 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Defines the structure step to restore one mod_livepoll activity.
+ *
+ * @package     mod_livepoll
+ * @copyright   Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_livepoll_activity_structure_step extends restore_activity_structure_step {
 
     /**
-     * Defines the structure to be restored.
-     *
-     * @return restore_path_element[].
+     * {@inheritdoc}
      */
     protected function define_structure() {
         $paths = array();
@@ -42,6 +43,12 @@ class restore_livepoll_activity_structure_step extends restore_activity_structur
         return $this->prepare_activity_structure($paths);
     }
 
+    /**
+     * Process a data element for restoration.
+     * @param $data
+     * @throws base_step_exception
+     * @throws dml_exception
+     */
     protected function process_livepoll($data) {
         global $DB;
 

@@ -30,28 +30,30 @@ require_once($CFG->dirroot.'/mod/livepoll/backup/moodle2/backup_livepoll_setting
 
 /**
  * The class provides all the settings and steps to perform one complete backup of mod_livepoll.
+ * @package     mod_livepoll
+ * @copyright   Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_livepoll_activity_task extends backup_activity_task {
 
     /**
-     * Defines particular settings for the plugin.
+     * {@inheritdoc}
      */
     protected function define_my_settings() {
         return;
     }
 
     /**
-     * Defines particular steps for the backup process.
+     * {@inheritdoc}
      */
     protected function define_my_steps() {
         $this->add_step(new backup_livepoll_activity_structure_step('livepoll_structure', 'livepoll.xml'));
     }
 
     /**
-     * Codes the transformations to perform in the activity in order to get transportable (encoded) links.
-     *
-     * @param string $content.
-     * @return string.
+     * Encodes content links.
+     * @param string $content
+     * @return string|string[]|null
      */
     static public function encode_content_links($content) {
         global $CFG;
