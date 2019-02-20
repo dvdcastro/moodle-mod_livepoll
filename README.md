@@ -12,11 +12,24 @@ concerns there.
 
 1. Go to [Firebase](https://firebase.google.com/) and create an account
 2. Once in the [Firebase console](https://console.firebase.google.com), create a project
-3. [Enable anonymous authentication](https://firebase.google.com/docs/auth/web/anonymous-auth), if anonymous authentication is not setup, the poll will not work.
-4. From the project overview page in the [Firebase console](https://console.firebase.google.com),
+3. We're using the __real time database__ for this project. So, create a database.
+4. A popup will appear to configure _Cloud Firestore_, select any type of security (Locked/Test) mode.
+5. Switch from __Cloud firestore__ to __Realtime database__ (Top part of the page)
+6. Access __Rules__ and set these rules:
+    ![firebase-rules](https://user-images.githubusercontent.com/1523388/53123057-32dec380-3526-11e9-8783-66626742e07a.png)
+    ```
+    {
+        "rules": {
+            ".read": "auth != null",
+            ".write": "auth != null"
+        }
+    }
+    ```
+7. [Enable anonymous authentication](https://firebase.google.com/docs/auth/web/anonymous-auth), if anonymous authentication is not setup, the poll will not work.
+8. From the project overview page in the [Firebase console](https://console.firebase.google.com),
 click __Add Firebase to your web app__. If your project already has an app, select __Add App__
 from the project overview page.
-5. You can copy and paste the __Project ID__ and __API Key__ to add
+9. You can copy and paste the __Project ID__ and __API Key__ to add
 them to the Moodle plugin settings page. _Site administration > Plugins > Activity modules > Live poll_
 
 ## Usage
