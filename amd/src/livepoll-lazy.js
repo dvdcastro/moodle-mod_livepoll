@@ -20,7 +20,7 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'core/log'],
+define(["jquery", "core/log"],
     function($, Log) {
 
         var self = this;
@@ -39,13 +39,13 @@ define(['jquery', 'core/log'],
          * Adds the click listener to each vote btn so the vote firebase db is updated.
          */
         var addClickListeners = function() {
-            $('.livepoll-votebtn').on('click', function(){
-                var option = $(this).data('option');
+            $(".livepoll-votebtn").on("click", function(){
+                var option = $(this).data("option");
                 var vote = {
                     option: option
                 };
-                var voteRef = self.database.ref('polls/' + self.pollKey + '/votes/' + self.userKey);
-                voteRef.once('value').then(function(voteSnapshot) {
+                var voteRef = self.database.ref("polls/" + self.pollKey + "/votes/" + self.userKey);
+                voteRef.once("value").then(function(voteSnapshot) {
                     if (voteSnapshot.val() && voteSnapshot.val().option === vote.option) {
                         voteRef.remove();
                     } else {
@@ -53,7 +53,7 @@ define(['jquery', 'core/log'],
                     }
                 });
 
-            }).removeClass('disabled');
+            }).removeClass("disabled");
         };
 
         /**
@@ -67,7 +67,7 @@ define(['jquery', 'core/log'],
                 promises.push(promise);
             });
             $.when.apply($, promises).done(function() {
-                Log.debug('livepoll UI has been updated.');
+                Log.debug("livepoll UI has been updated.");
             });
         };
 
@@ -78,11 +78,11 @@ define(['jquery', 'core/log'],
         var updateVoteCount = function(snapshot) {
             var votes = snapshot.val();
             resetVotes();
-            $('.livepoll-votebtn').addClass('btn-primary').removeClass('btn-success');
+            $(".livepoll-votebtn").addClass("btn-primary").removeClass("btn-success");
             $.each(votes, function( userKey, vote ) {
                 self.votes[vote.option]++;
                 if (userKey === self.userKey) {
-                    $('.livepoll-votebtn[data-option="' + vote.option + '"]').addClass('btn-success').removeClass('btn-primary');
+                    $(".livepoll-votebtn[data-option=\"" + vote.option + "\"]").addClass("btn-success").removeClass("btn-primary");
                 }
             });
             updateVoteUI();
@@ -92,10 +92,10 @@ define(['jquery', 'core/log'],
          * Adds listeners for state changes in the poll.
          */
         var addDBListeners = function() {
-            var pollRef = self.database.ref('polls/' + self.pollKey);
-            pollRef.on('child_added', updateVoteCount);
-            pollRef.on('child_changed', updateVoteCount);
-            pollRef.on('child_removed', updateVoteCount);
+            var pollRef = self.database.ref("polls/" + self.pollKey);
+            pollRef.on("child_added", updateVoteCount);
+            pollRef.on("child_changed", updateVoteCount);
+            pollRef.on("child_removed", updateVoteCount);
 
             updateVoteUI();
         };
@@ -107,14 +107,14 @@ define(['jquery', 'core/log'],
         var initVoteUI = function() {
             var dfd = $.Deferred(), subPromises = [];
             self.resultHandlers = [];
-            var textDecorators = ['green', 'bold', 'shadowy'];
+            var textDecorators = ["green", "bold", "shadowy"];
             $.each(self.resultsToRender, function(i, rType) {
                 var reqDfd = $.Deferred();
                 require(
                     [
-                        'mod_livepoll/' + rType + '-result-lazy'
+                        "mod_livepoll/" + rType + "-result-lazy"
                     ], function(Handler) {
-                        if (rType === 'text') {
+                        if (rType === "text") {
                             var currentTxtResult = new Handler(), txtPromises = [];
 
                             $.each(textDecorators, function(i, decoratorId) {
@@ -122,7 +122,7 @@ define(['jquery', 'core/log'],
                                 txtPromises.push(txtDfd.promise());
                                 require(
                                     [
-                                        'mod_livepoll/' + decoratorId + '-text-result-lazy'
+                                        "mod_livepoll/" + decoratorId + "-text-result-lazy"
                                     ], function(TextDecorator) {
                                         currentTxtResult = new TextDecorator(currentTxtResult);
                                         txtDfd.resolve();
@@ -171,20 +171,20 @@ define(['jquery', 'core/log'],
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                Log.error('Could not authenticate into firebase using anonymous setup.');
+                Log.error("Could not authenticate into firebase using anonymous setup.");
                 Log.error(errorCode);
                 Log.error(errorMessage);
             });
             self.auth.onAuthStateChanged(function(user) {
                 if (user) {
-                    Log.debug('User has signed in to firebase.');
+                    Log.debug("User has signed in to firebase.");
                     self.fbuser = user;
                     initVoteUI().done(function() {
                         addDBListeners();
                         addClickListeners();
                     });
                 } else {
-                    Log.debug('User has signed out from firebase.');
+                    Log.debug("User has signed out from firebase.");
                 }
             });
         };
@@ -213,7 +213,7 @@ define(['jquery', 'core/log'],
             $(document).ready(function() {
                 /* global firebase */
                 if (undefined === firebase) {
-                    Log.error('Firebase not found. Live poll will not work.');
+                    Log.error("Firebase not found. Live poll will not work.");
                     return;
                 }
                 self.firebase = firebase;
@@ -222,6 +222,6 @@ define(['jquery', 'core/log'],
         };
 
         return {
-            'init': init
+            "init": init
         };
     });

@@ -20,7 +20,7 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery'],
+define(["jquery"],
     function($) {
         var util = {};
 

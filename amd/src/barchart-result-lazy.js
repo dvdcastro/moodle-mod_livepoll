@@ -20,7 +20,7 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'core/log', 'mod_livepoll/result', 'core/chartjs-lazy'],
+define(["jquery", "core/log", "mod_livepoll/result", "core/chartjs-lazy"],
     function($, Log, Result, Chart) {
 
         /**
@@ -31,7 +31,7 @@ define(['jquery', 'core/log', 'mod_livepoll/result', 'core/chartjs-lazy'],
         function BarChartResult() {
             Result.call(this);
             this._initialized = false;
-            this._chartType = 'bar';
+            this._chartType = "bar";
             return (this);
         }
 
@@ -71,7 +71,7 @@ define(['jquery', 'core/log', 'mod_livepoll/result', 'core/chartjs-lazy'],
                 }
             });
 
-            Log.debug('Bar chart initialized!');
+            Log.debug("Bar chart initialized!");
         };
 
         /**

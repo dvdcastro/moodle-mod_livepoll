@@ -20,7 +20,7 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'mod_livepoll/result'],
+define(["jquery", "mod_livepoll/result"],
     function($, Result) {
         /**
          * Text result constructor.
@@ -42,7 +42,7 @@ define(['jquery', 'mod_livepoll/result'],
          */
         TextResult.prototype.renderResult = function(options, votes) {
             $.each(options, function(optionid) {
-                $('#vote-count-' + optionid).text(votes[optionid]);
+                $("#vote-count-" + optionid).text(votes[optionid]);
             });
         };
 

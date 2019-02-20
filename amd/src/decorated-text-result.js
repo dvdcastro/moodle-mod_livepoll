@@ -20,7 +20,7 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'mod_livepoll/text-result-lazy'],
+define(["jquery", "mod_livepoll/text-result-lazy"],
     function($, TextResult) {
         /**
          * Decorated Text result constructor.

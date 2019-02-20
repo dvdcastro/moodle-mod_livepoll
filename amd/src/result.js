@@ -20,7 +20,7 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'core/log'],
+define(["jquery", "core/log"],
     function($, Log) {
 
         /**
@@ -53,9 +53,9 @@ define(['jquery', 'core/log'],
          * @param callback
          */
         Result.prototype.performUpdate = function(options, votes, callback) {
-            Log.debug('Results:');
+            Log.debug("Results:");
             $.each(options, function(optionid) {
-                Log.debug(optionid + ' : ' + votes[optionid]);
+                Log.debug(optionid + " : " + votes[optionid]);
             });
             callback();
         };
