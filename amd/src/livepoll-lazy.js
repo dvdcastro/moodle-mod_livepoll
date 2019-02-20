@@ -94,13 +94,14 @@ define(['jquery', 'core/log'],
             });
             self.auth.onAuthStateChanged(function(user) {
                 if (user) {
+                    Log.debug('User has signed in to firebase.');
                     self.fbuser = user;
                     initVoteUI().done(function() {
                         addDBListeners();
                         addClickListeners();
                     });
                 } else {
-                    Log.error('User has signed out from firebase.');
+                    Log.debug('User has signed out from firebase.');
                 }
             });
         };
