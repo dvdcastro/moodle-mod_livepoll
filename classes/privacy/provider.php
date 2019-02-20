@@ -45,7 +45,8 @@ class provider implements metadataprovider {
      */
     public static function get_metadata(collection $collection) : collection {
         $collection->add_external_location_link('livepoll_firebase', [
-            'userid' => 'privacy:metadata:livepoll_firebase:userid'
+            'userid' => 'privacy:metadata:livepoll_firebase:userid',
+            'votes' => 'privacy:metadata:livepoll_firebase:votes',
         ], 'privacy:metadata:livepoll_firebase');
 
         return $collection;

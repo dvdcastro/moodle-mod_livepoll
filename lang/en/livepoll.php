@@ -42,6 +42,7 @@ $string['pluginadministration'] = 'Live poll administration';
 $string['pluginname'] = 'Live poll';
 $string['privacy:metadata:livepoll_firebase'] = 'Live poll creates a hashes based on course and user data in firebase to identify polls and votes.';
 $string['privacy:metadata:livepoll_firebase:userid'] = 'The userid is used when creating the hash that identifies poll votes.';
+$string['privacy:metadata:livepoll_firebase:votes'] = 'The selected option made for a poll.';
 $string['view'] = 'View';
 $string['firebaseapikey'] = 'Firebase API Key';
 $string['firebaseapikey_desc'] = 'You can get your API key from your Firebase workspace.';
