@@ -26,38 +26,6 @@ define(['jquery', 'core/log'],
         var self = this;
 
         /**
-         * Module initialization function.
-         *
-         * @param apiKey
-         * @param projectID
-         * @param pollKey
-         * @param userKey
-         * @param options
-         * @param correctOption
-         */
-        var init = function(apiKey, projectID, pollKey, userKey, options, correctOption, resultsToRender) {
-            self.apiKey = apiKey;
-            self.projectID = projectID;
-            self.options = options;
-            self.correctOption = correctOption;
-            self.pollKey = pollKey;
-            self.userKey = userKey;
-            self.resultsToRender = resultsToRender;
-
-            resetVotes();
-
-            $(document).ready(function() {
-                /* global firebase */
-                if (undefined === firebase) {
-                    Log.error('Firebase not found. Live poll will not work.');
-                    return;
-                }
-                self.firebase = firebase;
-                initFirebase();
-            });
-        };
-
-        /**
          * Resets the vote count for each option to 0.
          */
         var resetVotes = function() {
@@ -65,57 +33,6 @@ define(['jquery', 'core/log'],
             $.each(self.options, function(optionid) {
                 self.votes[optionid] = 0;
             });
-        };
-
-        /**
-         * Initializes firebase library.
-         */
-        var initFirebase = function() {
-            // Set the configuration for your app.
-            var config = {
-                apiKey: self.apiKey,
-                authDomain: self.projectID + ".firebaseapp.com",
-                databaseURL: "https://" + self.projectID + ".firebaseio.com",
-                storageBucket: self.projectID + ".appspot.com"
-            };
-
-            self.firebase.initializeApp(config);
-
-            // Get a reference to the database service.
-            self.database = self.firebase.database();
-            self.auth = self.firebase.auth();
-            self.auth.signInAnonymously().catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                Log.error('Could not authenticate into firebase using anonymous setup.');
-                Log.error(errorCode);
-                Log.error(errorMessage);
-            });
-            self.auth.onAuthStateChanged(function(user) {
-                if (user) {
-                    Log.debug('User has signed in to firebase.');
-                    self.fbuser = user;
-                    initVoteUI().done(function() {
-                        addDBListeners();
-                        addClickListeners();
-                    });
-                } else {
-                    Log.debug('User has signed out from firebase.');
-                }
-            });
-        };
-
-        /**
-         * Adds listeners for state changes in the poll.
-         */
-        var addDBListeners = function() {
-            var pollRef = self.database.ref('polls/' + self.pollKey);
-            pollRef.on('child_added', updateVoteCount);
-            pollRef.on('child_changed', updateVoteCount);
-            pollRef.on('child_removed', updateVoteCount);
-
-            updateVoteUI();
         };
 
         /**
@@ -140,6 +57,21 @@ define(['jquery', 'core/log'],
         };
 
         /**
+         * Updates the vote UI.
+         * Chart and text vote count.
+         */
+        var updateVoteUI = function() {
+            var promises = [];
+            $.each(self.resultHandlers, function(i, handler) {
+                var promise = handler.update(self.options, self.votes);
+                promises.push(promise);
+            });
+            $.when.apply($, promises).done(function() {
+                Log.debug('livepoll UI has been updated.');
+            });
+        };
+
+        /**
          * Updates the voute count and vote UI for a poll snapshot.
          * @param snapshot
          */
@@ -153,6 +85,18 @@ define(['jquery', 'core/log'],
                     $('.livepoll-votebtn[data-option="' + vote.option + '"]').addClass('btn-success').removeClass('btn-primary');
                 }
             });
+            updateVoteUI();
+        };
+
+        /**
+         * Adds listeners for state changes in the poll.
+         */
+        var addDBListeners = function() {
+            var pollRef = self.database.ref('polls/' + self.pollKey);
+            pollRef.on('child_added', updateVoteCount);
+            pollRef.on('child_changed', updateVoteCount);
+            pollRef.on('child_removed', updateVoteCount);
+
             updateVoteUI();
         };
 
@@ -207,17 +151,73 @@ define(['jquery', 'core/log'],
         };
 
         /**
-         * Updates the vote UI.
-         * Chart and text vote count.
+         * Initializes firebase library.
          */
-        var updateVoteUI = function() {
-            var promises = [];
-            $.each(self.resultHandlers, function(i, handler) {
-                var promise = handler.update(self.options, self.votes);
-                promises.push(promise);
+        var initFirebase = function() {
+            // Set the configuration for your app.
+            var config = {
+                apiKey: self.apiKey,
+                authDomain: self.projectID + ".firebaseapp.com",
+                databaseURL: "https://" + self.projectID + ".firebaseio.com",
+                storageBucket: self.projectID + ".appspot.com"
+            };
+
+            self.firebase.initializeApp(config);
+
+            // Get a reference to the database service.
+            self.database = self.firebase.database();
+            self.auth = self.firebase.auth();
+            self.auth.signInAnonymously().catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                Log.error('Could not authenticate into firebase using anonymous setup.');
+                Log.error(errorCode);
+                Log.error(errorMessage);
             });
-            $.when.apply($, promises).done(function() {
-                Log.debug('livepoll UI has been updated.');
+            self.auth.onAuthStateChanged(function(user) {
+                if (user) {
+                    Log.debug('User has signed in to firebase.');
+                    self.fbuser = user;
+                    initVoteUI().done(function() {
+                        addDBListeners();
+                        addClickListeners();
+                    });
+                } else {
+                    Log.debug('User has signed out from firebase.');
+                }
+            });
+        };
+
+        /**
+         * Module initialization function.
+         *
+         * @param apiKey
+         * @param projectID
+         * @param pollKey
+         * @param userKey
+         * @param options
+         * @param correctOption
+         */
+        var init = function(apiKey, projectID, pollKey, userKey, options, correctOption, resultsToRender) {
+            self.apiKey = apiKey;
+            self.projectID = projectID;
+            self.options = options;
+            self.correctOption = correctOption;
+            self.pollKey = pollKey;
+            self.userKey = userKey;
+            self.resultsToRender = resultsToRender;
+
+            resetVotes();
+
+            $(document).ready(function() {
+                /* global firebase */
+                if (undefined === firebase) {
+                    Log.error('Firebase not found. Live poll will not work.');
+                    return;
+                }
+                self.firebase = firebase;
+                initFirebase();
             });
         };
 
