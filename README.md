@@ -1,5 +1,6 @@
 # Live poll
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d6a9cd4828dd4779ae925ca91f8f5618)](https://app.codacy.com/app/dvdcastro/moodle-mod_livepoll?utm_source=github.com&utm_medium=referral&utm_content=dvdcastro/moodle-mod_livepoll&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/dvdcastro/moodle-mod_livepoll.svg?branch=master)](https://travis-ci.org/dvdcastro/moodle-mod_livepoll)
 
 This module allows having a live updating poll.
