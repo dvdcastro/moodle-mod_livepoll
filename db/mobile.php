@@ -24,14 +24,14 @@ defined('MOODLE_INTERNAL') || die();
 $addons = [
     "mod_livepoll" => [
         "handlers" => [ // Different places where the add-on will display content.
-            'courselivepoll' => [ // Handler unique name (can be anything)
+            'courselivepoll' => [ // Handler unique name (can be anything).
                 'displaydata' => [
                     'title' => 'pluginname',
                     'icon' => $CFG->wwwroot . '/mod/livepoll/pix/icon.png',
                     'class' => '',
                 ],
-                'delegate' => 'CoreCourseModuleDelegate', // Delegate (where to display the link to the add-on)
-                'method' => 'mobile_course_view', // Main function in \mod_livepoll\output\mobile
+                'delegate' => 'CoreCourseModuleDelegate', // Delegate (where to display the link to the add-on).
+                'method' => 'mobile_course_view', // Main function in \mod_livepoll\output\mobile.
                 'offlinefunctions' => [
                     'mobile_course_view' => [],
                 ], // Function needs caching for offline.

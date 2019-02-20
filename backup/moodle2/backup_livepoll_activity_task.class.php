@@ -60,11 +60,11 @@ class backup_livepoll_activity_task extends backup_activity_task {
 
         $base = preg_quote($CFG->wwwroot, "/");
 
-        // Link to the list of choices
+        // Link to the list of choices.
         $search = "/(" . $base ."\/mod\/livepoll\/index.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@LIVEPOLLINDEX*$2@$', $content);
 
-        // Link to choice view by moduleid
+        // Link to choice view by moduleid.
         $search = "/(" . $base . "\/mod\/livepoll\/view.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@LIVEPOLLVIEWBYID*$2@$', $content);
 
