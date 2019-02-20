@@ -45,7 +45,8 @@ class restore_livepoll_activity_structure_step extends restore_activity_structur
 
     /**
      * Process a data element for restoration.
-     * @param $data
+     *
+     * @param mixed $data
      * @throws base_step_exception
      * @throws dml_exception
      */
