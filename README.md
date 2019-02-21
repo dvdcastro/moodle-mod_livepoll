@@ -35,6 +35,7 @@ them to the Moodle plugin settings page. _Site administration > Plugins > Activi
 ## Usage
 
 Just use it like a normal activity, this will not store any of the responses into Moodle.
+![livepolldemo](https://user-images.githubusercontent.com/1523388/53187047-3dee2e00-35d0-11e9-98bd-5005f4b7bd1c.gif)
 
 ## License
 
