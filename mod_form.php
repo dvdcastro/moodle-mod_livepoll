@@ -92,6 +92,7 @@ class mod_livepoll_mod_form extends moodleform_mod {
         $strategies = [
             'barchart_text' => get_string('barchart_text_result', 'mod_livepoll'),
             'text_only' => get_string('text_only_result', 'mod_livepoll'),
+            'text_barchart' => get_string('text_barchart_result', 'mod_livepoll'),
         ];
         $mform->addElement('select', 'resultrendering', get_string('resultrendering', 'mod_livepoll'), $strategies);
         $mform->addRule('resultrendering', null, 'required', null, 'client');

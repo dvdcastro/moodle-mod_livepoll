@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Live poll rendering strategy interface.
+ * Live poll rendering strategy class.
  *
  * @package    mod_livepoll
  * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
@@ -24,20 +24,20 @@ namespace mod_livepoll\result;
 
 defined('MOODLE_INTERNAL') || die;
 /**
- * Live poll rendering strategy interface.
+ * Live poll rendering strategy class.
  *
  * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class barchart_text_strategy implements rendering_strategy {
+class text_barchart_strategy implements rendering_strategy {
 
     /**
      * {@inheritdoc}
      */
     public function get_results_to_render() {
         return [
-            'barchart',
             'text',
+            'barchart',
         ];
     }
 }

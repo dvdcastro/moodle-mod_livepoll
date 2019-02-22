@@ -59,3 +59,4 @@ $string['resultrendering'] = 'Result rendering';
 $string['resultrenderinginvalid'] = 'The selected result rendering option must have a value.';
 $string['barchart_text_result'] = 'Bar chart and text';
 $string['text_only_result'] = 'Text only';
+$string['text_barchart_result'] = 'Text and barchart result';
