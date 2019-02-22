@@ -41,12 +41,12 @@ define(["jquery", "mod_livepoll/util", "mod_livepoll/decorated-text-result"],
         ShadowyTextResult.prototype.renderResult = function(options, votes) {
             var highest = util.getHighestVotedOptions(options, votes);
             $.each(options, function(optionid) {
-                $("#vote-count-" + optionid).parent()
+                $(".vote-count-" + optionid).parent()
                     .removeClass("mod-livepoll-shadowy");
             });
             if (highest.length > 0) {
                 $.each(highest, function(i, optionid) {
-                    $("#vote-count-" + optionid).parent()
+                    $(".vote-count-" + optionid).parent()
                         .addClass("mod-livepoll-shadowy");
                 });
             }

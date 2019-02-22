@@ -60,3 +60,4 @@ $string['resultrenderinginvalid'] = 'The selected result rendering option must h
 $string['barchart_text_result'] = 'Bar chart and text';
 $string['text_only_result'] = 'Text only';
 $string['text_barchart_result'] = 'Text and barchart result';
+$string['a_hundred_text_only'] = '100 text results!!';

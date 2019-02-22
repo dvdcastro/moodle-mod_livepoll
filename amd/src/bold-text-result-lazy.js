@@ -41,11 +41,11 @@ define(["jquery", "mod_livepoll/util", "mod_livepoll/decorated-text-result"],
         BoldTextResult.prototype.renderResult = function(options, votes) {
             var highest = util.getHighestVotedOptions(options, votes);
             $.each(options, function(optionid) {
-                $("#vote-count-" + optionid).css("font-weight","");
+                $(".vote-count-" + optionid).css("font-weight","");
             });
             if (highest.length > 0) {
                 $.each(highest, function(i, optionid) {
-                    $("#vote-count-" + optionid).css("font-weight","Bold");
+                    $(".vote-count-" + optionid).css("font-weight","Bold");
                 });
             }
             Object.getPrototypeOf(BoldTextResult.prototype).renderResult.call(this, options, votes);

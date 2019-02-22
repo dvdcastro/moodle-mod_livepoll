@@ -42,7 +42,7 @@ define(["jquery", "mod_livepoll/result"],
          */
         TextResult.prototype.renderResult = function(options, votes) {
             $.each(options, function(optionid) {
-                $("#vote-count-" + optionid).text(votes[optionid]);
+                $(".vote-count-" + optionid).text(votes[optionid]);
             });
         };
 
