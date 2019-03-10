@@ -39,6 +39,9 @@ define(["jquery", "core/log"],
          * Adds the click listener to each vote btn so the vote firebase db is updated.
          */
         var addClickListeners = function() {
+            if (self.listeningToClicks) {
+                return;
+            }
             $(".livepoll-votebtn").on("click", function(){
                 var option = $(this).data("option");
                 var vote = {
@@ -52,8 +55,32 @@ define(["jquery", "core/log"],
                         voteRef.set(vote);
                     }
                 });
+            });
 
-            }).removeClass("disabled");
+            self.listeningToClicks = true;
+        };
+
+        var addControlListeners = function() {
+            $("#livepoll_closevoting").on("change", function() {
+                var closeVoting = this.checked;
+                var controlRef = self.database.ref("polls/" + self.pollKey + "/controls/closeVoting");
+                controlRef.set(closeVoting);
+            });
+
+            $("#livepoll_highlightanswer").on("change", function() {
+                var higlightAnswer = this.checked;
+                var controlRef = self.database.ref("polls/" + self.pollKey + "/controls/higlightAnswer");
+                controlRef.set(higlightAnswer);
+            });
+        };
+
+        var removeClickListeners = function() {
+            if (!self.listeningToClicks) {
+                return;
+            }
+
+            $(".livepoll-votebtn").off("click");
+            self.listeningToClicks = false;
         };
 
         /**
@@ -73,29 +100,66 @@ define(["jquery", "core/log"],
 
         /**
          * Updates the voute count and vote UI for a poll snapshot.
-         * @param snapshot
          */
-        var updateVoteCount = function(snapshot) {
-            var votes = snapshot.val();
-            resetVotes();
-            $(".livepoll-votebtn").addClass("btn-primary").removeClass("btn-success");
-            $.each(votes, function( userKey, vote ) {
-                self.votes[vote.option]++;
-                if (userKey === self.userKey) {
-                    $(".livepoll-votebtn[data-option=\"" + vote.option + "\"]").addClass("btn-success").removeClass("btn-primary");
+        var updateVoteCount = function() {
+            var votesRef = self.database.ref("polls/" + self.pollKey + "/votes");
+            votesRef.once("value").then(function(votesSnapshot) {
+                var votes = votesSnapshot.val();
+                resetVotes();
+                $(".livepoll-votebtn").addClass("btn-primary").removeClass("btn-success");
+                $.each(votes, function( userKey, vote ) {
+                    self.votes[vote.option]++;
+                    if (userKey === self.userKey) {
+                        $(".livepoll-votebtn[data-option=\"" + vote.option + "\"]")
+                            .addClass("btn-success").removeClass("btn-primary");
+                    }
+                });
+                updateVoteUI();
+            });
+        };
+
+        /**
+         * Upadtes control input state.
+         */
+        var updateControls = function() {
+            var controlsRef = self.database.ref("polls/" + self.pollKey + "/controls");
+            controlsRef.once("value").then(function(controlsSnapshot) {
+                var controlStatus = controlsSnapshot.val();
+
+                self.closeVoting = !!controlStatus.closeVoting;
+                self.higlightAnswer = !!controlStatus.higlightAnswer;
+
+                $("#livepoll_closevoting").prop('checked', self.closeVoting);
+                $("#livepoll_highlightanswer").prop('checked', self.higlightAnswer);
+
+                $(".livepoll-votebtn").toggleClass("disabled", self.closeVoting);
+
+                if (self.closeVoting) {
+                    removeClickListeners();
+                } else {
+                    addClickListeners();
+                }
+
+                $(".livepoll-votebtn").removeClass("answer");
+                if (self.higlightAnswer) {
+                    $(".livepoll-votebtn[data-option=\"" + self.correctOption + "\"]").addClass("answer");
                 }
             });
-            updateVoteUI();
         };
 
         /**
          * Adds listeners for state changes in the poll.
          */
         var addDBListeners = function() {
-            var pollRef = self.database.ref("polls/" + self.pollKey);
-            pollRef.on("child_added", updateVoteCount);
-            pollRef.on("child_changed", updateVoteCount);
-            pollRef.on("child_removed", updateVoteCount);
+            var votesRef = self.database.ref("polls/" + self.pollKey + "/votes");
+            votesRef.on("child_added", updateVoteCount);
+            votesRef.on("child_changed", updateVoteCount);
+            votesRef.on("child_removed", updateVoteCount);
+
+            var controlsRef = self.database.ref("polls/" + self.pollKey + "/controls");
+            controlsRef.on("child_added", updateControls);
+            controlsRef.on("child_changed", updateControls);
+            controlsRef.on("child_removed", updateControls);
 
             updateVoteUI();
         };
@@ -181,7 +245,7 @@ define(["jquery", "core/log"],
                     self.fbuser = user;
                     initVoteUI().done(function() {
                         addDBListeners();
-                        addClickListeners();
+                        addControlListeners();
                     });
                 } else {
                     Log.debug("User has signed out from firebase.");
@@ -198,6 +262,7 @@ define(["jquery", "core/log"],
          * @param userKey
          * @param options
          * @param correctOption
+         * @param resultsToRender
          */
         var init = function(apiKey, projectID, pollKey, userKey, options, correctOption, resultsToRender) {
             self.apiKey = apiKey;
@@ -207,6 +272,9 @@ define(["jquery", "core/log"],
             self.pollKey = pollKey;
             self.userKey = userKey;
             self.resultsToRender = resultsToRender;
+            self.closeVoting = false;
+            self.higlightAnswer = false;
+            self.listeningToClicks = false;
 
             resetVotes();
 

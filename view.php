@@ -84,6 +84,7 @@ foreach ($optkeys as $optkey) {
 }
 
 $canvote = has_capability('mod/livepoll:vote', $modulecontext);
+$cancontrol = has_capability('mod/livepoll:addinstance', $modulecontext);
 
 echo $OUTPUT->render_from_template('mod_livepoll/header',
     (object) [
@@ -109,6 +110,25 @@ if ($canvote) {
     echo $OUTPUT->render_from_template('mod_livepoll/voting_buttons',
         (object) [
             'options' => $templateopts
+        ]);
+}
+
+if ($cancontrol) {
+    $controls = [
+        'closevoting',
+        'highlightanswer',
+    ];
+    $controlopts = [];
+    foreach ($controls as $control) {
+        $controlopts[] = (object) [
+            'title' => get_string('control:' . $control, 'mod_livepoll', strtoupper($optkey)),
+            'optionid' => 'livepoll_' . $control,
+        ];
+    }
+
+    echo $OUTPUT->render_from_template('mod_livepoll/control_buttons',
+        (object) [
+            'options' => $controlopts
         ]);
 }
 
