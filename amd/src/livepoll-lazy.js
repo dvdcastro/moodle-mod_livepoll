@@ -123,6 +123,13 @@ define(["jquery", "core/log"],
          */
         var updateControls = function() {
             var controlsRef = self.database.ref("polls/" + self.pollKey + "/controls");
+
+            // Enable voting as default behaviour.
+            if (!self.closeVoting) {
+                $(".livepoll-votebtn").removeClass("disabled");
+                addClickListeners();
+            }
+
             controlsRef.once("value").then(function(controlsSnapshot) {
                 var controlStatus = controlsSnapshot.val();
 

@@ -59,3 +59,7 @@ $string['resultrendering'] = 'Mostrar resultados';
 $string['resultrenderinginvalid'] = 'La opción de mostrar resultados debe tener un valor.';
 $string['barchart_text_result'] = 'Gráfica de barras y texto';
 $string['text_only_result'] = 'Únicamente texto';
+
+$string['votecontrol'] = 'Control de votos';
+$string['control:closevoting'] = 'Cerrar votación';
+$string['control:highlightanswer'] = 'Mostrar respuesta';
