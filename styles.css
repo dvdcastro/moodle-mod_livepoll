@@ -78,7 +78,7 @@ input:checked + .livepoll-slider:before {
     }
 }
 
-.livepoll-votebtn.answer {
+.livepoll-answer-animation {
     animation-duration: 0.2s;
     animation-name: livepoll-answer;
     animation-iteration-count: infinite;

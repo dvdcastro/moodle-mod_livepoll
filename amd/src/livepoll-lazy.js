@@ -147,9 +147,13 @@ define(["jquery", "core/log"],
                     addClickListeners();
                 }
 
-                $(".livepoll-votebtn").removeClass("answer");
+                $(".livepoll-votebtn").removeClass("livepoll-answer-animation");
+                $(".mod-livepoll-text-result").removeClass("livepoll-answer-animation");
                 if (self.higlightAnswer) {
-                    $(".livepoll-votebtn[data-option=\"" + self.correctOption + "\"]").addClass("answer");
+                    $(".livepoll-votebtn[data-option=\"" + self.correctOption + "\"]")
+                        .addClass("livepoll-answer-animation");
+                    $(".mod-livepoll-text-result:has(#vote-count-" + self.correctOption + ")")
+                        .addClass("livepoll-answer-animation");
                 }
             });
         };
