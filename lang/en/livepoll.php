@@ -63,3 +63,5 @@ $string['text_only_result'] = 'Text only';
 $string['votecontrol'] = 'Vote control';
 $string['control:closevoting'] = 'Close voting';
 $string['control:highlightanswer'] = 'Highlight answer';
+$string['control:votinghasclosed'] = 'Voting has been closed by moderator.';
+$string['control:votinghasclosed:close'] = 'Close message';

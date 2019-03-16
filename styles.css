@@ -74,7 +74,7 @@ input:checked + .livepoll-slider:before {
 
     to {
         opacity: .5;
-        transform: scale(1.9, 1.9);
+        transform: scale(1.5, 1.5);
     }
 }
 

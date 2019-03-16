@@ -26,31 +26,15 @@
     * none
 
     Context variables required for this template:
-    * options list of available options
+    * none
 
     Example context (json):
     {
-        "options": [
-            {
-                "title" : "Option A",
-                "optionid" : "optiona",
-                "value" : "abc"
-            },
-            {
-                "title" : "Option B",
-                "optionid" : "optionb",
-                "value" : "def"
-            }
-        ]
     }
 }}
-<h5>
-    {{# str }} yourvote, mod_livepoll {{/ str }}
-</h5>
-<div class="livepoll-closed-voting-msg">
-</div>
-{{#options}}
-    <button class="btn btn-primary livepoll-votebtn disabled" data-option="{{ optionid }}">
-        {{ title }}
+<div class="alert alert-warning alert-dismissible fade hide" role="alert">
+    {{# str }} control:votinghasclosed, mod_livepoll {{/ str }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="{{# str }} control:votinghasclosed:close, mod_livepoll {{/ str }}">
+        <span aria-hidden="true">&times;</span>
     </button>
-{{/options}}
+</div>

@@ -20,8 +20,8 @@
  * @copyright Copyright (c) 2018 Blackboard Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(["jquery", "core/log"],
-    function($, Log) {
+define(["jquery", "core/log", "core/templates"],
+    function($, Log, templates) {
 
         var self = this;
 
@@ -141,10 +141,23 @@ define(["jquery", "core/log"],
 
                 $(".livepoll-votebtn").toggleClass("disabled", self.closeVoting);
 
+
                 if (self.closeVoting) {
                     removeClickListeners();
+                    var tmpltName = "mod_livepoll/voting_closed";
+                    if ($(".livepoll-closed-voting-msg > .alert").length === 0) {
+                        templates.render(tmpltName, {}).then(function(html, js) {
+                            templates.appendNodeContents(".livepoll-closed-voting-msg", html, js);
+                            $(".livepoll-closed-voting-msg > .alert")
+                                .alert().removeClass("hide").addClass("show");
+                        });
+                    }
                 } else {
                     addClickListeners();
+                    if ($(".livepoll-closed-voting-msg > .alert").length > 0) {
+                        $(".livepoll-closed-voting-msg > .alert")
+                            .alert("close");
+                    }
                 }
 
                 $(".livepoll-votebtn").removeClass("livepoll-answer-animation");
