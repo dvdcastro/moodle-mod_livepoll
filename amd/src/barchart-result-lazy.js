@@ -32,6 +32,15 @@ define(["jquery", "core/log", "mod_livepoll/result", "core/chartjs-lazy"],
             Result.call(this);
             this._initialized = false;
             this._chartType = "bar";
+            this._options = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                }
+            };
             return (this);
         }
 
@@ -58,20 +67,18 @@ define(["jquery", "core/log", "mod_livepoll/result", "core/chartjs-lazy"],
                     datasets: [{
                         label: "Votes",
                         data: votes,
+                        backgroundColor: [
+                            "#ff6384",
+                            "#36a2eb",
+                            "#cc65fe",
+                            "#ffce56",
+                        ],
                     }]
                 },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
+                options: this._options
             });
 
-            Log.debug("Bar chart initialized!");
+            Log.debug(this._chartType + " initialized!");
         };
 
         /**

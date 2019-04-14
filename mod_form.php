@@ -91,6 +91,10 @@ class mod_livepoll_mod_form extends moodleform_mod {
 
         $strategies = [
             'barchart_text' => get_string('barchart_text_result', 'mod_livepoll'),
+            'piechart_text' => get_string('piechart_text_result', 'mod_livepoll'),
+            'doughnutchart_text' => get_string('doughnutchart_text_result', 'mod_livepoll'),
+            'polarareachart_text' => get_string('polarareachart_text_result', 'mod_livepoll'),
+            'radarchart_text' => get_string('radarchart_text_result', 'mod_livepoll'),
             'text_only' => get_string('text_only_result', 'mod_livepoll'),
         ];
         $mform->addElement('select', 'resultrendering', get_string('resultrendering', 'mod_livepoll'), $strategies);

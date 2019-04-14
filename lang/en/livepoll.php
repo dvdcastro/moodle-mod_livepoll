@@ -59,6 +59,10 @@ $string['resultrendering'] = 'Result rendering';
 $string['resultrenderinginvalid'] = 'The selected result rendering option must have a value.';
 $string['barchart_text_result'] = 'Bar chart and text';
 $string['text_only_result'] = 'Text only';
+$string['piechart_text_result'] = 'Pie chart and text';
+$string['doughnutchart_text_result'] = 'Doughnut chart and text';
+$string['polarareachart_text_result'] = 'Polar area chart and text';
+$string['radarchart_text_result'] = 'Radar chart and text';
 
 $string['votecontrol'] = 'Vote control';
 $string['control:closevoting'] = 'Close voting';
