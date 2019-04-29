@@ -63,6 +63,7 @@ $string['piechart_text_result'] = 'Pie chart and text';
 $string['doughnutchart_text_result'] = 'Doughnut chart and text';
 $string['polarareachart_text_result'] = 'Polar area chart and text';
 $string['radarchart_text_result'] = 'Radar chart and text';
+$string['totalvotes'] = 'Total number of votes: ';
 
 $string['votecontrol'] = 'Vote control';
 $string['control:closevoting'] = 'Close voting';

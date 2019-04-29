@@ -34,7 +34,12 @@ them to the Moodle plugin settings page. _Site administration > Plugins > Activi
 
 ## Usage
 
-Just use it like a normal activity, this will not store any of the responses into Moodle.
+Just use it like a normal activity. You can create a poll in a course and configure the voting options and what to render.
+
+It is suggested you use this when performing live classes so students and instructors can interact with the charts and controls live.
+
+This will not store any of the responses into Moodle.
+
 ![livepolldemo](https://user-images.githubusercontent.com/1523388/53187047-3dee2e00-35d0-11e9-98bd-5005f4b7bd1c.gif)
 
 ## License

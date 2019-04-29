@@ -41,9 +41,12 @@ define(["jquery", "mod_livepoll/result"],
          * @param votes
          */
         TextResult.prototype.renderResult = function(options, votes) {
+            var totalVotes = 0;
             $.each(options, function(optionid) {
                 $("#vote-count-" + optionid).text(votes[optionid]);
+                totalVotes += votes[optionid];
             });
+            $(".mod-livepoll-totalvotes").text(totalVotes);
         };
 
         /**
