@@ -59,7 +59,13 @@ $string['resultrendering'] = 'Mostrar resultados';
 $string['resultrenderinginvalid'] = 'La opción de mostrar resultados debe tener un valor.';
 $string['barchart_text_result'] = 'Gráfica de barras y texto';
 $string['text_only_result'] = 'Únicamente texto';
+$string['piechart_text_result'] = 'Gráfica de pie y texto';
+$string['doughnutchart_text_result'] = 'Gráfica de dona y texto';
+$string['polarareachart_text_result'] = 'Gráfica de área polar y texto';
+$string['radarchart_text_result'] = 'Gráfica de radar y texto';
 
 $string['votecontrol'] = 'Control de votos';
 $string['control:closevoting'] = 'Cerrar votación';
 $string['control:highlightanswer'] = 'Mostrar respuesta';
+$string['control:votinghasclosed'] = 'La votación ha sido cerrada por el moderador.';
+$string['control:votinghasclosed:close'] = 'Cerrar mensaje';
